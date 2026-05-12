@@ -69,13 +69,27 @@ window.graphView = (function () {
             container,
             { nodes, edges },
             {
-                physics: { stabilization: true },
+                // forceAtlas2Based handles hub-and-spoke layouts (e.g., a single
+                // requester linked to many tasks) much more cleanly than the
+                // default Barnes-Hut solver, which tends to squash hubs together.
+                physics: {
+                    stabilization: { iterations: 200 },
+                    solver: 'forceAtlas2Based',
+                    forceAtlas2Based: {
+                        gravitationalConstant: -80,
+                        centralGravity: 0.005,
+                        springLength: 150,
+                        springConstant: 0.06,
+                        avoidOverlap: 0.6
+                    }
+                },
                 interaction: { hover: true },
                 groups: {
                     Task: { color: '#4e79a7' },
                     TaskDetail: { color: '#f28e2b' },
                     Comment: { color: '#e15759' },
                     User: { color: '#76b7b2' },
+                    Requester: { color: '#b07aa1', shape: 'dot' },
                     Category: { color: '#59a14f' }
                 }
             }
@@ -94,8 +108,11 @@ window.graphView = (function () {
         setTimeout(notifyRenderComplete, 5000);
     }
 
-    function readPropCaseInsensitive(obj, ...names) {
-        if (!obj) return undefined;
+    // Synthesized "Requester" nodes are now produced server-side in
+    // HelpDeskGraphBuilder and are present in graph.json — no client-side
+    // augmentation needed.
+
+    function readPropCaseInsensitive(obj, ...names) {        if (!obj) return undefined;
         for (const n of names) {
             if (obj[n] !== undefined) return obj[n];
         }
@@ -121,18 +138,26 @@ window.graphView = (function () {
         const detailArr = toArray(readPropCaseInsensitive(filter, 'detailTypes', 'DetailTypes'));
         const userArr = toArray(readPropCaseInsensitive(filter, 'users', 'Users'));
         const taskArr = toArray(readPropCaseInsensitive(filter, 'tasks', 'Tasks'));
+        const requesterArr = toArray(readPropCaseInsensitive(filter, 'requesters', 'Requesters'));
 
         const types = new Set(typesArr);
         const statuses = new Set(statusArr);
         const details = new Set(detailArr);
         const users = new Set(userArr);
         const tasks = new Set(taskArr);
+        const requesters = new Set(requesterArr);
 
         const allTypes = types.size === 0;
         const allStatus = statuses.size === 0;
         const allDetail = details.size === 0;
         const allUsers = users.size === 0;
         const allTasks = tasks.size === 0;
+        const allRequesters = requesters.size === 0;
+
+        // True when the user has narrowed the view in any way that should
+        // cause us to hide orphan Category / User / Requester nodes.
+        const narrowing = !allStatus || !allDetail || !allUsers || !allTasks || !allRequesters
+            || (!allTypes && types.size < new Set(doc.nodes.map(n => n.type)).size);
 
         // Pass 1 — direct rules on each node.
         const keep = new Set();
@@ -141,6 +166,7 @@ window.graphView = (function () {
 
             if (n.type === 'User' && !allUsers && !users.has(n.id)) continue;
             if (n.type === 'Task' && !allTasks && !tasks.has(n.id)) continue;
+            if (n.type === 'Requester' && !allRequesters && !requesters.has(n.id)) continue;
 
             if (n.type === 'Task' && !allStatus) {
                 const s = n.data ? (n.data.status ?? n.data.Status) : null;
@@ -153,14 +179,28 @@ window.graphView = (function () {
             keep.add(n.id);
         }
 
-        // Pass 2 — task whose requester user is hidden → drop task.
-        if (!allUsers) {
+        // Pass 2 — task whose requester is not in the Requesters selection → drop task.
+        // The Requesters facet contains BOTH registered users and synthesized
+        // Requester hub nodes (anything that is a REQUESTED_BY target), so this
+        // single check covers both kinds of requesters.
+        if (!allRequesters) {
             for (const n of doc.nodes) {
                 if (n.type !== 'Task' || !keep.has(n.id)) continue;
-                const requester = n.data && (n.data.requesterUserId ?? n.data.RequesterUserId);
-                if (requester !== undefined && requester !== null) {
-                    const userId = `user:${requester}`;
-                    if (!users.has(userId)) keep.delete(n.id);
+
+                // Find requester edge target for this task.
+                let requesterTarget = null;
+                for (const e of doc.edges) {
+                    if (e.type !== 'REQUESTED_BY') continue;
+                    if (e.source !== n.id) continue;
+                    requesterTarget = e.target;
+                    break;
+                }
+
+                // Only filter when the task HAS a requester edge that points
+                // somewhere outside the selection. Tasks with no requester at
+                // all are unaffected by the Requesters filter.
+                if (requesterTarget && !requesters.has(requesterTarget)) {
+                    keep.delete(n.id);
                 }
             }
         }
@@ -176,6 +216,58 @@ window.graphView = (function () {
         }
         for (const [detailId, taskId] of taskOfDetail) {
             if (!keep.has(taskId)) keep.delete(detailId);
+        }
+
+        if (narrowing) {
+            // Pass 4a — hide User / Requester nodes that have no remaining
+            // linked task (avoids floating hub nodes once tasks get filtered).
+            const taskCountByNode = new Map();
+            for (const e of doc.edges) {
+                if (!e.source || !e.target) continue;
+                if (!e.source.startsWith('task:')) continue;
+                if (!keep.has(e.source)) continue;
+                if (e.target.startsWith('user:') || e.target.startsWith('requester:')) {
+                    taskCountByNode.set(e.target, (taskCountByNode.get(e.target) || 0) + 1);
+                }
+            }
+            for (const n of doc.nodes) {
+                if (n.type !== 'User' && n.type !== 'Requester') continue;
+                if (!keep.has(n.id)) continue;
+                if (!taskCountByNode.has(n.id)) keep.delete(n.id);
+            }
+
+            // Pass 4b — hide Category nodes that contain no remaining task
+            // (directly or through their descendant categories).
+            const catHasTask = new Set();
+            for (const e of doc.edges) {
+                if (e.type !== 'IN_CATEGORY') continue;
+                if (!keep.has(e.source)) continue; // source = task
+                if (typeof e.target !== 'string' || !e.target.startsWith('category:')) continue;
+                catHasTask.add(e.target);
+            }
+            // Propagate up the CHILD_OF chain so ancestor categories of
+            // populated children remain visible.
+            const parentOf = new Map();
+            for (const e of doc.edges) {
+                if (e.type !== 'CHILD_OF') continue;
+                if (typeof e.source === 'string' && typeof e.target === 'string'
+                    && e.source.startsWith('category:') && e.target.startsWith('category:')) {
+                    parentOf.set(e.source, e.target);
+                }
+            }
+            const reachable = new Set(catHasTask);
+            for (const start of catHasTask) {
+                let cur = parentOf.get(start);
+                while (cur && !reachable.has(cur)) {
+                    reachable.add(cur);
+                    cur = parentOf.get(cur);
+                }
+            }
+            for (const n of doc.nodes) {
+                if (n.type !== 'Category') continue;
+                if (!keep.has(n.id)) continue;
+                if (!reachable.has(n.id)) keep.delete(n.id);
+            }
         }
 
         return keep;

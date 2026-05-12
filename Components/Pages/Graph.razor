@@ -44,8 +44,8 @@
                         else
                         {
                             <RadzenCheckBoxList TValue="string"
-                                                Value="@_filter.NodeTypesList"
-                                                Change="@OnNodeTypesChanged"
+                                                @bind-Value="_filter.NodeTypesList"
+                                                @bind-Value:after="ApplyFilters"
                                                 Orientation="Orientation.Vertical">
                                 <Items>
                                     @foreach (var t in _facets.NodeTypes)
@@ -67,8 +67,8 @@
                                             Data="@_facets.Users"
                                             TextProperty="Label"
                                             ValueProperty="Id"
-                                            Value="@_filter.UsersList"
-                                            Change="@OnUsersChanged"
+                                            @bind-Value="_filter.UsersList"
+                                            @bind-Value:after="ApplyFilters"
                                             Multiple="true"
                                             AllowClear="true"
                                             AllowFiltering="true"
@@ -85,6 +85,35 @@
                             </div>
                         }
 
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Style="margin:0;">Requesters</RadzenText>
+                        @if (_facets.Requesters.Count == 0)
+                        {
+                            <RadzenText TextStyle="TextStyle.Caption" Style="color:#64748b;">(no requesters)</RadzenText>
+                        }
+                        else
+                        {
+                            <RadzenDropDown TValue="IEnumerable<string>"
+                                            Data="@_facets.Requesters"
+                                            TextProperty="Label"
+                                            ValueProperty="Id"
+                                            @bind-Value="_filter.RequestersList"
+                                            @bind-Value:after="ApplyFilters"
+                                            Multiple="true"
+                                            AllowClear="true"
+                                            AllowFiltering="true"
+                                            Chips="true"
+                                            Placeholder="All requesters"
+                                            Style="width: 100%;" />
+                            <div class="d-flex gap-2">
+                                <RadzenButton Text="Select all" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@SelectAllRequesters" />
+                                <RadzenButton Text="Clear" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@ClearRequesters" />
+                            </div>
+                        }
+
                         <RadzenText TextStyle="TextStyle.Subtitle2" Style="margin:0;">Tasks</RadzenText>
                         @if (_facets.Tasks.Count == 0)
                         {
@@ -96,8 +125,8 @@
                                             Data="@_facets.Tasks"
                                             TextProperty="Label"
                                             ValueProperty="Id"
-                                            Value="@_filter.TasksList"
-                                            Change="@OnTasksChanged"
+                                            @bind-Value="_filter.TasksList"
+                                            @bind-Value:after="ApplyFilters"
                                             Multiple="true"
                                             AllowClear="true"
                                             AllowFiltering="true"
@@ -122,8 +151,8 @@
                         else
                         {
                             <RadzenCheckBoxList TValue="string"
-                                                Value="@_filter.TaskStatusesList"
-                                                Change="@OnTaskStatusesChanged"
+                                                @bind-Value="_filter.TaskStatusesList"
+                                                @bind-Value:after="ApplyFilters"
                                                 Orientation="Orientation.Vertical">
                                 <Items>
                                     @foreach (var s in _facets.TaskStatuses)
@@ -142,8 +171,8 @@
                         else
                         {
                             <RadzenCheckBoxList TValue="string"
-                                                Value="@_filter.DetailTypesList"
-                                                Change="@OnDetailTypesChanged"
+                                                @bind-Value="_filter.DetailTypesList"
+                                                @bind-Value:after="ApplyFilters"
                                                 Orientation="Orientation.Vertical">
                                 <Items>
                                     @foreach (var d in _facets.DetailTypes)
@@ -231,7 +260,8 @@
         + ((_filter.TaskStatuses.Count > 0 && _filter.TaskStatuses.Count != _facets.TaskStatuses.Count) ? 1 : 0)
         + ((_filter.DetailTypes.Count > 0 && _filter.DetailTypes.Count != _facets.DetailTypes.Count) ? 1 : 0)
         + (_filter.Users.Count > 0 ? 1 : 0)
-        + (_filter.Tasks.Count > 0 ? 1 : 0);
+        + (_filter.Tasks.Count > 0 ? 1 : 0)
+        + (_filter.Requesters.Count > 0 ? 1 : 0);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -349,36 +379,6 @@
 
     private void ToggleFilterPopup() => _filterOpen = !_filterOpen;
 
-    private Task OnNodeTypesChanged(object? value)
-    {
-        _filter.NodeTypesList = (value as IEnumerable<string>) ?? Array.Empty<string>();
-        return ApplyFilters();
-    }
-
-    private Task OnTaskStatusesChanged(object? value)
-    {
-        _filter.TaskStatusesList = (value as IEnumerable<string>) ?? Array.Empty<string>();
-        return ApplyFilters();
-    }
-
-    private Task OnDetailTypesChanged(object? value)
-    {
-        _filter.DetailTypesList = (value as IEnumerable<string>) ?? Array.Empty<string>();
-        return ApplyFilters();
-    }
-
-    private Task OnUsersChanged(object? value)
-    {
-        _filter.UsersList = (value as IEnumerable<string>) ?? Array.Empty<string>();
-        return ApplyFilters();
-    }
-
-    private Task OnTasksChanged(object? value)
-    {
-        _filter.TasksList = (value as IEnumerable<string>) ?? Array.Empty<string>();
-        return ApplyFilters();
-    }
-
     private Task SelectAllUsers()
     {
         _filter.UsersList = _facets.Users.Select(u => u.Id).ToList();
@@ -400,6 +400,18 @@
     private Task ClearTasks()
     {
         _filter.TasksList = Array.Empty<string>();
+        return ApplyFilters();
+    }
+
+    private Task SelectAllRequesters()
+    {
+        _filter.RequestersList = _facets.Requesters.Select(r => r.Id).ToList();
+        return ApplyFilters();
+    }
+
+    private Task ClearRequesters()
+    {
+        _filter.RequestersList = Array.Empty<string>();
         return ApplyFilters();
     }
 

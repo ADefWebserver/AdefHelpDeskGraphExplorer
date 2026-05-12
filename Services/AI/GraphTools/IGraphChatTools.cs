@@ -32,5 +32,15 @@ public interface IGraphChatTools
     CategoryRollup? GetCategoryRollup(int categoryId, bool includeDescendants);
 
     UserSummary[] FindUserByName(string query, int max);
+
+    /// <summary>
+    /// Enumerate every distinct requester across all Task nodes — including
+    /// unregistered requesters that only appear as a free-text
+    /// <c>requesterName</c> on a task. Registered requesters (those with a
+    /// User node and <c>requesterUserId &gt; 0</c>) are merged onto the same
+    /// row as the linked user. Results are sorted by task count, descending.
+    /// </summary>
+    RequesterSummary[] ListRequesters(string? nameContains, int max);
+
     GraphStats Stats();
 }

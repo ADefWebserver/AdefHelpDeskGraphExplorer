@@ -86,6 +86,22 @@ public sealed class ChatService
                 _logger.LogWarning(ex, "Failed to compute graph stats for fallback grounding.");
             }
 
+            // Full requester roster (registered + unregistered, ranked by task count).
+            // Surfaced unconditionally because requester questions are common and the
+            // keyword excerpt only captures requesters whose name happens to match.
+            string requestersJson = "[]";
+            int requesterCount = 0;
+            try
+            {
+                var requesters = _graphTools.ListRequesters(null, GraphChatTools.HardMaxCap);
+                requesterCount = requesters.Length;
+                requestersJson = JsonSerializer.Serialize(requesters);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to compute requester roster for fallback grounding.");
+            }
+
             var excerpt = !string.IsNullOrWhiteSpace(lastUser)
                 ? _graphQuery.BuildContext(scope: null, userPrompt: lastUser)
                 : null;
@@ -118,8 +134,8 @@ public sealed class ChatService
             }
 
             _logger.LogInformation(
-                "No-tools grounding: usersOfInterest={Users} tasksOfInterest={Tasks} hasExcerpt={Excerpt}",
-                userCount, taskCount, !string.IsNullOrWhiteSpace(excerpt));
+                "No-tools grounding: usersOfInterest={Users} tasksOfInterest={Tasks} requesters={Requesters} hasExcerpt={Excerpt}",
+                userCount, taskCount, requesterCount, !string.IsNullOrWhiteSpace(excerpt));
 
             var sb = new System.Text.StringBuilder();
             sb.AppendLine();
@@ -127,6 +143,10 @@ public sealed class ChatService
             sb.AppendLine("=== GROUNDING DATA (your data source — read this first) ===");
             sb.AppendLine();
             sb.Append("Graph stats (JSON): ").AppendLine(statsJson);
+            sb.AppendLine();
+            sb.AppendLine("All requesters in the graph — ranked by task count, DESC (JSON).");
+            sb.AppendLine("Each row has: id (user:N or null), userId, name, username, email, isRegistered, taskCount, tasksByStatus, sampleTaskIds. Unregistered requesters (free-text requesterName, no User node) have id=null and isRegistered=false. This is the AUTHORITATIVE answer for 'who requested tasks?', 'list requesters', 'top requester', or any ranking by requested-task-count.");
+            sb.AppendLine(requestersJson);
             if (!string.IsNullOrEmpty(usersOfInterestJson))
             {
                 sb.AppendLine();
@@ -295,6 +315,8 @@ public sealed class ChatService
                 + "(Tasks/tickets, TaskDetails / Comments, Users, Categories). The next system "
                 + "message contains:\n"
                 + "  • a JSON summary of the graph (counts by node and edge type),\n"
+                + "  • the FULL list of requesters ranked by task count (registered + "
+                + "unregistered, every requester in the graph — not a sample),\n"
                 + "  • for any user named in the question, a precomputed UserActivity block "
                 + "with requestedTaskCount, commentedTaskCount and workedOnTaskCount (the union),\n"
                 + "  • for any task:N referenced, the list of participants and their roles,\n"
@@ -302,11 +324,15 @@ public sealed class ChatService
                 + "Grounding rules (must follow):\n"
                 + "  1. Never say 'I don't have the data' or 'the summary doesn't include this' — "
                 + "the JSON above IS your data source. If the answer requires a number, read it "
-                + "from the relevant UserActivity / stats block.\n"
+                + "from the relevant UserActivity / requesters / stats block.\n"
                 + "  2. 'Worked on' a task = requested it OR is assigned to it OR commented on it. "
                 + "Use workedOnTaskCount.\n"
-                + "  3. Cite node IDs you used (e.g. 'user:7', 'task:42').\n"
-                + "  4. Only when no user/task in the grounding matches the name in the prompt may "
+                + "  3. For 'who requested tasks?', 'list requesters', 'rank requesters', or any "
+                + "ranking by requested-task-count, read EVERY row of the requesters JSON — it is "
+                + "already sorted by taskCount DESC. Do not fall back to the keyword excerpt for "
+                + "requester questions.\n"
+                + "  4. Cite node IDs you used (e.g. 'user:7', 'task:42').\n"
+                + "  5. Only when no user/task in the grounding matches the name in the prompt may "
                 + "you ask the user to clarify the name.";
             return (basePrompt ?? string.Empty) + groundedHint;
         }

@@ -125,6 +125,16 @@ public static class GraphToolRegistration
             }),
 
         AIFunctionFactory.Create(
+            ([Description("Optional case-insensitive substring filter on name / username / email.")] string? nameContains,
+             [Description("Max results, 1-100. Default 50.")] int max)
+                => t.ListRequesters(nameContains, max),
+            new AIFunctionFactoryOptions
+            {
+                Name = "ListRequesters",
+                Description = "Enumerate EVERY distinct requester across all tasks in the graph — including unregistered requesters that only appear as a free-text requesterName on a Task (these have no User node and isRegistered=false). Registered requesters (backed by a User node) are merged onto the same row. Each row returns id (user:N or null), userId, name, username, email, isRegistered, taskCount, tasksByStatus, and up to 10 sample task ids. Results are sorted by taskCount descending. ALWAYS use this tool to answer 'who submitted tasks?', 'list the requesters', or 'who are the requesters?' — do NOT rely on SearchNodes excerpts or FindUserByName, which both miss unregistered requesters."
+            }),
+
+        AIFunctionFactory.Create(
             () => t.Stats(),
             new AIFunctionFactoryOptions
             {

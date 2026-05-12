@@ -101,6 +101,57 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
             });
         }
 
+        // Synthesized "Requester" nodes for free-text requesters on tasks that
+        // are NOT linked to a registered User. Group by normalized name so a
+        // single person's tasks share one hub node, which keeps the layout
+        // readable when a requester is on many tasks.
+        static string SlugRequester(string name)
+        {
+            var chars = name.Select(ch => char.IsLetterOrDigit(ch) ? char.ToLowerInvariant(ch) : '-').ToArray();
+            var slug = new string(chars).Trim('-');
+            while (slug.Contains("--")) slug = slug.Replace("--", "-");
+            return string.IsNullOrEmpty(slug) ? "anon" : slug;
+        }
+
+        var userIdSet = new HashSet<int>(users.Select(u => u.UserID));
+        var requesterByKey = new Dictionary<string, (string Id, string Name, List<int> TaskIds)>(StringComparer.OrdinalIgnoreCase);
+        foreach (var t in tasks)
+        {
+            // Skip tasks already linked to a registered User node.
+            if (t.RequesterUserID is int uid && uid != 0 && userIdSet.Contains(uid)) continue;
+            var rname = (t.RequesterName ?? string.Empty).Trim();
+            if (string.IsNullOrEmpty(rname)) continue;
+            var key = rname.ToLowerInvariant();
+            if (!requesterByKey.TryGetValue(key, out var entry))
+            {
+                var slug = SlugRequester(rname);
+                var rid = $"requester:{slug}";
+                var suffix = 2;
+                while (nodeIds.Contains(rid)) rid = $"requester:{slug}-{suffix++}";
+                entry = (rid, rname, new List<int>());
+                requesterByKey[key] = entry;
+                nodeIds.Add(rid);
+            }
+            entry.TaskIds.Add(t.TaskID);
+            requesterByKey[key] = entry;
+        }
+        foreach (var entry in requesterByKey.Values)
+        {
+            doc.Nodes.Add(new GraphNode
+            {
+                Id = entry.Id,
+                Type = "Requester",
+                Label = entry.Name,
+                Data = new()
+                {
+                    ["name"] = entry.Name,
+                    ["isRegistered"] = false,
+                    ["requestedTaskCount"] = entry.TaskIds.Count,
+                    ["sampleTaskIds"] = entry.TaskIds.Take(10).Select(id => $"task:{id}").ToArray()
+                }
+            });
+        }
+
         // Tasks
         foreach (var t in tasks)
         {
@@ -192,6 +243,17 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
                     // Until the schema grows a distinct AssignedUserID column,
                     // "assigned to" mirrors "requested by".
                     doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = taskNode, Target = u, Type = "ASSIGNED_TO" });
+                }
+            }
+
+            // Link tasks to their synthesized Requester node (unregistered requesters).
+            var alreadyLinkedToUser = t.RequesterUserID is int ru && ru != 0 && userIdSet.Contains(ru);
+            if (!alreadyLinkedToUser && !string.IsNullOrWhiteSpace(t.RequesterName))
+            {
+                var key = t.RequesterName!.Trim().ToLowerInvariant();
+                if (requesterByKey.TryGetValue(key, out var entry) && nodeIds.Contains(entry.Id))
+                {
+                    doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = taskNode, Target = entry.Id, Type = "REQUESTED_BY" });
                 }
             }
         }

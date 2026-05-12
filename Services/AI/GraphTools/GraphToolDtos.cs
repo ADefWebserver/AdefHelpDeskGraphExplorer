@@ -103,6 +103,23 @@ public sealed record UserSummary(
     int WorkedOnTaskCount);
 
 /// <summary>
+/// Aggregated row for one distinct requester across the graph's tasks.
+/// Registered requesters (backed by a User node) and unregistered requesters
+/// (recorded only as a free-text <c>requesterName</c> on the Task) are both
+/// represented; <see cref="IsRegistered"/> distinguishes the two cases.
+/// </summary>
+public sealed record RequesterSummary(
+    string? Id,                              // "user:N" when registered, null otherwise
+    int? UserId,                             // numeric userId, null when unregistered
+    string Name,                             // display name (User.Label or task.requesterName)
+    string? Username,                        // populated only when registered
+    string? Email,                           // populated only when registered
+    bool IsRegistered,                       // true when a User node exists for this requester
+    int TaskCount,                           // total tasks where this requester appears
+    Dictionary<string, int> TasksByStatus,   // status breakdown across their tasks
+    int[] SampleTaskIds);                    // up to 10 example task ids
+
+/// <summary>
 /// High-level graph statistics. Includes overall status/priority breakdowns
 /// and small "top-N" lists so the model can summarise the graph in one call.
 /// </summary>

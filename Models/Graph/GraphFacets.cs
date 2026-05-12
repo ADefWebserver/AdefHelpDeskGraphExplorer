@@ -11,11 +11,12 @@ public sealed record GraphFacets(
     IReadOnlyList<string> TaskStatuses,
     IReadOnlyList<string> DetailTypes,
     IReadOnlyList<FacetOption> Users,
-    IReadOnlyList<FacetOption> Tasks)
+    IReadOnlyList<FacetOption> Tasks,
+    IReadOnlyList<FacetOption> Requesters)
 {
     public static GraphFacets Empty { get; } = new(
         Array.Empty<string>(), Array.Empty<string>(), Array.Empty<string>(),
-        Array.Empty<FacetOption>(), Array.Empty<FacetOption>());
+        Array.Empty<FacetOption>(), Array.Empty<FacetOption>(), Array.Empty<FacetOption>());
 
     public static GraphFacets From(GraphDocument doc)
     {
@@ -58,7 +59,23 @@ public sealed record GraphFacets(
             .OrderBy(o => o.Label, StringComparer.OrdinalIgnoreCase)
             .ToList();
 
-        return new GraphFacets(nodeTypes, taskStatuses, detailTypes, users, tasks);
+        // Requesters facet includes any node that is referenced as the target
+        // of a REQUESTED_BY edge. This intentionally covers BOTH registered
+        // users who requested tasks and synthesized free-text Requester hubs,
+        // so the operator can filter by who-asked-for-the-task in one place.
+        var requesterIds = doc.Edges
+            .Where(e => string.Equals(e.Type, "REQUESTED_BY", StringComparison.Ordinal))
+            .Select(e => e.Target)
+            .Where(t => !string.IsNullOrEmpty(t))
+            .ToHashSet(StringComparer.Ordinal);
+
+        var requesters = doc.Nodes
+            .Where(n => requesterIds.Contains(n.Id))
+            .Select(n => new FacetOption(n.Id, string.IsNullOrWhiteSpace(n.Label) ? n.Id : n.Label))
+            .OrderBy(o => o.Label, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        return new GraphFacets(nodeTypes, taskStatuses, detailTypes, users, tasks, requesters);
     }
 
     private static string? ReadString(IDictionary<string, object?>? data, string key)

@@ -49,9 +49,10 @@ internal static class AICapabilities
     /// <summary>
     /// Whether the active provider+model pair can drive a tool / function-calling loop
     /// through Microsoft.Extensions.AI's <c>FunctionCallContent</c> round-trip.
-    /// Today only OpenAI and Azure OpenAI use the native SDK that supports this; the
-    /// custom <see cref="AnthropicChatClient"/> and <see cref="GoogleAIChatClient"/>
-    /// wrappers do not yet forward tool definitions to the wire protocol.
+    /// OpenAI / Azure OpenAI use the native SDK that supports this out of the box.
+    /// <see cref="AnthropicChatClient"/> implements Anthropic's native tool_use /
+    /// tool_result content blocks. The custom <see cref="GoogleAIChatClient"/>
+    /// wrapper does not yet forward tool definitions to the wire protocol.
     /// </summary>
     public static bool SupportsToolCalling(string? providerKey, string? modelId)
     {
@@ -60,6 +61,7 @@ internal static class AICapabilities
         if (string.Equals(key, "OpenAI", StringComparison.OrdinalIgnoreCase)) return true;
         if (string.Equals(key, "AzureOpenAI", StringComparison.OrdinalIgnoreCase)) return true;
         if (string.Equals(key, "Azure OpenAI", StringComparison.OrdinalIgnoreCase)) return true;
+        if (IsAnthropic(key)) return true;
         return false;
     }
 }

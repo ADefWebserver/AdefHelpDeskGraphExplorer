@@ -388,6 +388,90 @@ public sealed class GraphChatTools : IGraphChatTools
             .ToArray();
     }
 
+    public RequesterSummary[] ListRequesters(string? nameContains, int max)
+    {
+        var doc = Doc();
+        if (doc is null) return Array.Empty<RequesterSummary>();
+        var cap = Clamp(max, 50);
+
+        var userById = doc.Nodes
+            .Where(n => n.Type == "User")
+            .ToDictionary(n => n.Id, StringComparer.OrdinalIgnoreCase);
+
+        // Key = "user:N" for registered requesters, "name:<lower-name>" for unregistered.
+        var groups = new Dictionary<string, (string Key, GraphNode? User, string Name, List<GraphNode> Tasks)>(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var t in doc.Nodes.Where(n => n.Type == "Task"))
+        {
+            var uid = GetInt(t, "requesterUserId");
+            var rname = GetString(t, "requesterName");
+            string key;
+            GraphNode? userNode = null;
+            string displayName;
+
+            if (uid is > 0 && userById.TryGetValue($"user:{uid}", out var un))
+            {
+                key = un.Id;
+                userNode = un;
+                displayName = un.Label ?? rname ?? $"User {uid}";
+            }
+            else if (!string.IsNullOrWhiteSpace(rname))
+            {
+                key = "name:" + rname.Trim().ToLowerInvariant();
+                displayName = rname.Trim();
+            }
+            else
+            {
+                key = "name:(unknown)";
+                displayName = "(unknown)";
+            }
+
+            if (!groups.TryGetValue(key, out var g))
+                groups[key] = g = (key, userNode, displayName, new List<GraphNode>());
+            g.Tasks.Add(t);
+            groups[key] = g;
+        }
+
+        IEnumerable<(string Key, GraphNode? User, string Name, List<GraphNode> Tasks)> rows = groups.Values;
+
+        if (!string.IsNullOrWhiteSpace(nameContains))
+        {
+            var q = nameContains.Trim().ToLowerInvariant();
+            rows = rows.Where(r =>
+                (r.Name ?? "").ToLowerInvariant().Contains(q) ||
+                (r.User is not null && (
+                    (GetString(r.User, "username") ?? "").ToLowerInvariant().Contains(q) ||
+                    (GetString(r.User, "email") ?? "").ToLowerInvariant().Contains(q))));
+        }
+
+        return rows
+            .OrderByDescending(r => r.Tasks.Count)
+            .ThenBy(r => r.Name, StringComparer.OrdinalIgnoreCase)
+            .Take(cap)
+            .Select(r =>
+            {
+                var byStatus = r.Tasks
+                    .GroupBy(n => GetString(n, "status") ?? "(none)")
+                    .ToDictionary(g => g.Key, g => g.Count(), StringComparer.OrdinalIgnoreCase);
+                var sample = r.Tasks
+                    .Select(n => (int)(GetInt(n, "taskId") ?? 0))
+                    .Where(i => i > 0)
+                    .Take(10)
+                    .ToArray();
+                return new RequesterSummary(
+                    r.User?.Id,
+                    r.User is not null ? (int?)(GetInt(r.User, "userId") ?? 0) : null,
+                    r.Name,
+                    r.User is not null ? GetString(r.User, "username") : null,
+                    r.User is not null ? GetString(r.User, "email") : null,
+                    r.User is not null,
+                    r.Tasks.Count,
+                    byStatus,
+                    sample);
+            })
+            .ToArray();
+    }
+
     public TaskParticipant[] GetTaskParticipants(int taskId)
     {
         var doc = Doc();

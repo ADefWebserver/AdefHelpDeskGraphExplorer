@@ -23,6 +23,9 @@ public sealed class GraphFilterState
     [JsonPropertyName("tasks")]
     public HashSet<string> Tasks { get; set; } = new(StringComparer.Ordinal);
 
+    [JsonPropertyName("requesters")]
+    public HashSet<string> Requesters { get; set; } = new(StringComparer.Ordinal);
+
     // Adapters so RadzenCheckBoxList (IEnumerable<T>) can two-way bind.
     [JsonIgnore]
     public IEnumerable<string> NodeTypesList
@@ -65,6 +68,15 @@ public sealed class GraphFilterState
     {
         get => Tasks;
         set => Tasks = value is null
+            ? new HashSet<string>(StringComparer.Ordinal)
+            : new HashSet<string>(value, StringComparer.Ordinal);
+    }
+
+    [JsonIgnore]
+    public IEnumerable<string> RequestersList
+    {
+        get => Requesters;
+        set => Requesters = value is null
             ? new HashSet<string>(StringComparer.Ordinal)
             : new HashSet<string>(value, StringComparer.Ordinal);
     }
