@@ -119,18 +119,28 @@ window.graphView = (function () {
         const typesArr = toArray(readPropCaseInsensitive(filter, 'nodeTypes', 'NodeTypes'));
         const statusArr = toArray(readPropCaseInsensitive(filter, 'taskStatuses', 'TaskStatuses'));
         const detailArr = toArray(readPropCaseInsensitive(filter, 'detailTypes', 'DetailTypes'));
+        const userArr = toArray(readPropCaseInsensitive(filter, 'users', 'Users'));
+        const taskArr = toArray(readPropCaseInsensitive(filter, 'tasks', 'Tasks'));
 
         const types = new Set(typesArr);
         const statuses = new Set(statusArr);
         const details = new Set(detailArr);
+        const users = new Set(userArr);
+        const tasks = new Set(taskArr);
 
         const allTypes = types.size === 0;
         const allStatus = statuses.size === 0;
         const allDetail = details.size === 0;
+        const allUsers = users.size === 0;
+        const allTasks = tasks.size === 0;
 
+        // Pass 1 — direct rules on each node.
         const keep = new Set();
         for (const n of doc.nodes) {
             if (!allTypes && !types.has(n.type)) continue;
+
+            if (n.type === 'User' && !allUsers && !users.has(n.id)) continue;
+            if (n.type === 'Task' && !allTasks && !tasks.has(n.id)) continue;
 
             if (n.type === 'Task' && !allStatus) {
                 const s = n.data ? (n.data.status ?? n.data.Status) : null;
@@ -142,6 +152,32 @@ window.graphView = (function () {
             }
             keep.add(n.id);
         }
+
+        // Pass 2 — task whose requester user is hidden → drop task.
+        if (!allUsers) {
+            for (const n of doc.nodes) {
+                if (n.type !== 'Task' || !keep.has(n.id)) continue;
+                const requester = n.data && (n.data.requesterUserId ?? n.data.RequesterUserId);
+                if (requester !== undefined && requester !== null) {
+                    const userId = `user:${requester}`;
+                    if (!users.has(userId)) keep.delete(n.id);
+                }
+            }
+        }
+
+        // Pass 3 — details/comments whose parent task is hidden → drop them.
+        const taskOfDetail = new Map();
+        for (const e of doc.edges) {
+            if (e.source && e.target &&
+                e.source.startsWith('task:') &&
+                (e.target.startsWith('detail:') || e.target.startsWith('comment:'))) {
+                taskOfDetail.set(e.target, e.source);
+            }
+        }
+        for (const [detailId, taskId] of taskOfDetail) {
+            if (!keep.has(taskId)) keep.delete(detailId);
+        }
+
         return keep;
     }
 

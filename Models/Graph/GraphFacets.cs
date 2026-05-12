@@ -4,13 +4,18 @@ namespace AdefHelpDeskGraphExplorer.Models.Graph;
 /// Distinct values present in the current graph used to populate filter
 /// checkboxes. Computed from a loaded <see cref="GraphDocument"/>.
 /// </summary>
+public sealed record FacetOption(string Id, string Label);
+
 public sealed record GraphFacets(
     IReadOnlyList<string> NodeTypes,
     IReadOnlyList<string> TaskStatuses,
-    IReadOnlyList<string> DetailTypes)
+    IReadOnlyList<string> DetailTypes,
+    IReadOnlyList<FacetOption> Users,
+    IReadOnlyList<FacetOption> Tasks)
 {
     public static GraphFacets Empty { get; } = new(
-        Array.Empty<string>(), Array.Empty<string>(), Array.Empty<string>());
+        Array.Empty<string>(), Array.Empty<string>(), Array.Empty<string>(),
+        Array.Empty<FacetOption>(), Array.Empty<FacetOption>());
 
     public static GraphFacets From(GraphDocument doc)
     {
@@ -41,7 +46,19 @@ public sealed record GraphFacets(
             .Select(s => s!)
             .ToList();
 
-        return new GraphFacets(nodeTypes, taskStatuses, detailTypes);
+        var users = doc.Nodes
+            .Where(n => string.Equals(n.Type, "User", StringComparison.Ordinal))
+            .Select(n => new FacetOption(n.Id, string.IsNullOrWhiteSpace(n.Label) ? n.Id : n.Label))
+            .OrderBy(o => o.Label, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        var tasks = doc.Nodes
+            .Where(n => string.Equals(n.Type, "Task", StringComparison.Ordinal))
+            .Select(n => new FacetOption(n.Id, string.IsNullOrWhiteSpace(n.Label) ? n.Id : n.Label))
+            .OrderBy(o => o.Label, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+
+        return new GraphFacets(nodeTypes, taskStatuses, detailTypes, users, tasks);
     }
 
     private static string? ReadString(IDictionary<string, object?>? data, string key)

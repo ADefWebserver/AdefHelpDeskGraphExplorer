@@ -56,6 +56,64 @@
                             </RadzenCheckBoxList>
                         }
 
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Style="margin:0;">Users</RadzenText>
+                        @if (_facets.Users.Count == 0)
+                        {
+                            <RadzenText TextStyle="TextStyle.Caption" Style="color:#64748b;">(no users)</RadzenText>
+                        }
+                        else
+                        {
+                            <RadzenDropDown TValue="IEnumerable<string>"
+                                            Data="@_facets.Users"
+                                            TextProperty="Label"
+                                            ValueProperty="Id"
+                                            Value="@_filter.UsersList"
+                                            Change="@OnUsersChanged"
+                                            Multiple="true"
+                                            AllowClear="true"
+                                            AllowFiltering="true"
+                                            Chips="true"
+                                            Placeholder="All users"
+                                            Style="width: 100%;" />
+                            <div class="d-flex gap-2">
+                                <RadzenButton Text="Select all" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@SelectAllUsers" />
+                                <RadzenButton Text="Clear" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@ClearUsers" />
+                            </div>
+                        }
+
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Style="margin:0;">Tasks</RadzenText>
+                        @if (_facets.Tasks.Count == 0)
+                        {
+                            <RadzenText TextStyle="TextStyle.Caption" Style="color:#64748b;">(no tasks)</RadzenText>
+                        }
+                        else
+                        {
+                            <RadzenDropDown TValue="IEnumerable<string>"
+                                            Data="@_facets.Tasks"
+                                            TextProperty="Label"
+                                            ValueProperty="Id"
+                                            Value="@_filter.TasksList"
+                                            Change="@OnTasksChanged"
+                                            Multiple="true"
+                                            AllowClear="true"
+                                            AllowFiltering="true"
+                                            Chips="true"
+                                            Placeholder="All tasks"
+                                            Style="width: 100%;" />
+                            <div class="d-flex gap-2">
+                                <RadzenButton Text="Select all" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@SelectAllTasks" />
+                                <RadzenButton Text="Clear" Size="ButtonSize.ExtraSmall"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@ClearTasks" />
+                            </div>
+                        }
+
                         <RadzenText TextStyle="TextStyle.Subtitle2" Style="margin:0;">Task Status</RadzenText>
                         @if (_facets.TaskStatuses.Count == 0)
                         {
@@ -171,7 +229,9 @@
     private int FilterCount =>
         ((_facets.NodeTypes.Count > 0 && _filter.NodeTypes.Count != _facets.NodeTypes.Count) ? 1 : 0)
         + ((_filter.TaskStatuses.Count > 0 && _filter.TaskStatuses.Count != _facets.TaskStatuses.Count) ? 1 : 0)
-        + ((_filter.DetailTypes.Count > 0 && _filter.DetailTypes.Count != _facets.DetailTypes.Count) ? 1 : 0);
+        + ((_filter.DetailTypes.Count > 0 && _filter.DetailTypes.Count != _facets.DetailTypes.Count) ? 1 : 0)
+        + (_filter.Users.Count > 0 ? 1 : 0)
+        + (_filter.Tasks.Count > 0 ? 1 : 0);
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -304,6 +364,42 @@
     private Task OnDetailTypesChanged(object? value)
     {
         _filter.DetailTypesList = (value as IEnumerable<string>) ?? Array.Empty<string>();
+        return ApplyFilters();
+    }
+
+    private Task OnUsersChanged(object? value)
+    {
+        _filter.UsersList = (value as IEnumerable<string>) ?? Array.Empty<string>();
+        return ApplyFilters();
+    }
+
+    private Task OnTasksChanged(object? value)
+    {
+        _filter.TasksList = (value as IEnumerable<string>) ?? Array.Empty<string>();
+        return ApplyFilters();
+    }
+
+    private Task SelectAllUsers()
+    {
+        _filter.UsersList = _facets.Users.Select(u => u.Id).ToList();
+        return ApplyFilters();
+    }
+
+    private Task ClearUsers()
+    {
+        _filter.UsersList = Array.Empty<string>();
+        return ApplyFilters();
+    }
+
+    private Task SelectAllTasks()
+    {
+        _filter.TasksList = _facets.Tasks.Select(t => t.Id).ToList();
+        return ApplyFilters();
+    }
+
+    private Task ClearTasks()
+    {
+        _filter.TasksList = Array.Empty<string>();
         return ApplyFilters();
     }
 
