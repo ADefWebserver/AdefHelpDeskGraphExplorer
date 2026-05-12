@@ -1,0 +1,46 @@
+@using Microsoft.AspNetCore.Components.Web
+
+<div class="chat-input">
+    <RadzenTextArea @bind-Value="_text"
+                    Placeholder="Type your message... (Shift+Enter for newline)"
+                    Rows="2"
+                    Style="flex:1;resize:none;"
+                    Disabled="@Disabled"
+                    @onkeydown="OnKeyDown" />
+
+    @if (IsStreaming)
+    {
+        <RadzenButton Icon="stop" ButtonStyle="ButtonStyle.Danger" Click="OnStop" Text="Stop" />
+    }
+    else
+    {
+        <RadzenButton Icon="send" ButtonStyle="ButtonStyle.Primary" Click="OnSend" Text="Send" Disabled="@Disabled" />
+    }
+</div>
+
+@code {
+    [Parameter] public bool Disabled { get; set; }
+    [Parameter] public bool IsStreaming { get; set; }
+    [Parameter] public EventCallback<string> OnSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private string _text = string.Empty;
+
+    async Task OnSend()
+    {
+        if (string.IsNullOrWhiteSpace(_text)) return;
+        var t = _text.Trim();
+        _text = string.Empty;
+        await OnSubmit.InvokeAsync(t);
+    }
+
+    Task OnStop() => OnCancel.InvokeAsync();
+
+    async Task OnKeyDown(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !e.ShiftKey)
+        {
+            await OnSend();
+        }
+    }
+}

@@ -1,0 +1,28 @@
+@using AdefHelpDeskGraphExplorer.Models
+
+<div class="chat-message-list" @ref="_container">
+    @foreach (var msg in Messages.Where(m => m.Role != ChatTurnRole.System))
+    {
+        <MessageBubble Message="msg" />
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<ChatTurn> Messages { get; set; } = Array.Empty<ChatTurn>();
+
+    private ElementReference _container;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (Messages.Count > 0)
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("simpleChatScroll.scrollToBottom", _container);
+            }
+            catch { /* JS module may not be loaded yet */ }
+        }
+    }
+
+    [Inject] IJSRuntime JS { get; set; } = default!;
+}

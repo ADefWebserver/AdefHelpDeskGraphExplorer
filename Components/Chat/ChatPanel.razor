@@ -1,0 +1,206 @@
+@using AdefHelpDeskGraphExplorer.Models
+@using AdefHelpDeskGraphExplorer.Services.AI
+@using Microsoft.Extensions.Options
+@inject ChatService ChatService
+@inject AIConfigurationService ConfigService
+@inject AIModelService ModelService
+@inject IOptionsMonitor<AIOptions> OptionsMonitor
+@inject NavigationManager Nav
+@inject NotificationService Notify
+@implements IDisposable
+
+<RadzenStack Orientation="Orientation.Vertical" Gap="0.5rem" Style="height:100%;">
+
+    <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" AlignItems="AlignItems.Center" class="chat-toolbar">
+        <RadzenLabel Text="Provider:" />
+        <RadzenDropDown TValue="string"
+                        Data="@_enabledProviders"
+                        @bind-Value="_provider"
+                        Change="@(_ => OnProviderChanged())"
+                        Style="width:150px;" />
+        <RadzenLabel Text="Model:" />
+        <RadzenDropDown TValue="string"
+                        Data="@_models"
+                        @bind-Value="_model"
+                        AllowFiltering="true"
+                        AllowClear="true"
+                        Style="width:210px;" />
+        <RadzenButton Icon="refresh" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
+                      Click="RefreshModels" IsBusy="@_loadingModels" title="Refresh models" />
+        <span style="flex:1;"></span>
+        <RadzenButton Icon="restart_alt" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
+                      Click="ClearChat" Text="Clear" />
+        <RadzenButton Icon="settings" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
+                      Click="@(() => Nav.NavigateTo("/settings"))" title="Settings" />
+    </RadzenStack>
+
+    <div class="chat-surface">
+        @if (_messages.Count(m => m.Role != ChatTurnRole.System) == 0)
+        {
+            <div class="chat-empty">
+                <span class="chat-empty-icon">💬</span>
+                <div class="chat-empty-text">Start a conversation — type a message below.</div>
+            </div>
+        }
+        else
+        {
+            <MessageList Messages="@_messages" />
+        }
+    </div>
+
+    @if (_lastError is not null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Danger" AllowClose="true" ShowIcon="true" Close="@(() => _lastError = null)">
+            @_lastError
+        </RadzenAlert>
+    }
+
+    <MessageInput Disabled="@_isStreaming"
+                  IsStreaming="@_isStreaming"
+                  OnSubmit="HandleSubmit"
+                  OnCancel="HandleCancel" />
+</RadzenStack>
+
+@code {
+    private List<ChatTurn> _messages = new();
+    private List<string> _enabledProviders = new();
+    private List<string> _models = new();
+    private string _provider = "OpenAI";
+    private string _model = "";
+    private bool _loadingModels;
+    private bool _isStreaming;
+    private string? _lastError;
+    private CancellationTokenSource? _cts;
+    private IDisposable? _optsSubscription;
+
+    protected override async Task OnInitializedAsync()
+    {
+        LoadProviders();
+        await LoadModelsAsync();
+        _optsSubscription = OptionsMonitor.OnChange(_ =>
+        {
+            InvokeAsync(async () =>
+            {
+                LoadProviders();
+                await LoadModelsAsync();
+                StateHasChanged();
+            });
+        });
+    }
+
+    void LoadProviders()
+    {
+        var opts = OptionsMonitor.CurrentValue;
+        _enabledProviders = opts.Providers.Where(p => p.Value.Enabled).Select(p => p.Key).ToList();
+        if (_enabledProviders.Count == 0)
+        {
+            _enabledProviders.Add(opts.ActiveProvider);
+        }
+        if (!_enabledProviders.Contains(_provider))
+        {
+            _provider = _enabledProviders.Contains(opts.ActiveProvider) ? opts.ActiveProvider : _enabledProviders[0];
+        }
+    }
+
+    async Task OnProviderChanged()
+    {
+        await LoadModelsAsync();
+    }
+
+    async Task LoadModelsAsync()
+    {
+        _loadingModels = true;
+        try
+        {
+            _models = await ModelService.GetModelsAsync(_provider);
+            var prov = ConfigService.GetProvider(_provider);
+            var preferred = string.Equals(_provider, "AzureOpenAI", StringComparison.OrdinalIgnoreCase)
+                ? prov.DeploymentName
+                : prov.DefaultModel;
+            if (!string.IsNullOrWhiteSpace(preferred) && !_models.Contains(preferred!)) _models.Insert(0, preferred!);
+            _model = preferred ?? _models.FirstOrDefault() ?? "";
+        }
+        finally
+        {
+            _loadingModels = false;
+        }
+    }
+
+    async Task RefreshModels()
+    {
+        _loadingModels = true;
+        try
+        {
+            var prov = ConfigService.GetProvider(_provider);
+            _models = await ModelService.RefreshModelsAsync(_provider, prov.ApiKey, prov.Endpoint);
+            if (!string.IsNullOrWhiteSpace(_model) && !_models.Contains(_model)) _models.Insert(0, _model);
+            Notify.Notify(NotificationSeverity.Success, "Models refreshed", duration: 2000);
+        }
+        catch (Exception ex)
+        {
+            Notify.Notify(NotificationSeverity.Error, "Refresh failed", ex.Message, 4000);
+        }
+        finally
+        {
+            _loadingModels = false;
+        }
+    }
+
+    void ClearChat()
+    {
+        _messages.Clear();
+        _lastError = null;
+    }
+
+    async Task HandleSubmit(string prompt)
+    {
+        _lastError = null;
+        _messages.Add(new ChatTurn(ChatTurnRole.User, prompt));
+        var assistant = new ChatTurn(ChatTurnRole.Assistant, "") { IsStreaming = true };
+        _messages.Add(assistant);
+
+        _isStreaming = true;
+        _cts = new CancellationTokenSource();
+        StateHasChanged();
+
+        try
+        {
+            await foreach (var delta in ChatService.StreamAsync(
+                _messages.Where(m => m != assistant),
+                _provider,
+                _model,
+                _cts.Token))
+            {
+                assistant.Content += delta;
+                StateHasChanged();
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            assistant.Content += "\n\n_(canceled)_";
+        }
+        catch (Exception ex)
+        {
+            assistant.IsError = true;
+            assistant.Content = $"Error: {ex.Message}";
+            _lastError = ex.Message;
+        }
+        finally
+        {
+            assistant.IsStreaming = false;
+            _isStreaming = false;
+            _cts?.Dispose();
+            _cts = null;
+            StateHasChanged();
+        }
+    }
+
+    void HandleCancel() => _cts?.Cancel();
+
+    public void Dispose()
+    {
+        _cts?.Cancel();
+        _cts?.Dispose();
+        _optsSubscription?.Dispose();
+    }
+}

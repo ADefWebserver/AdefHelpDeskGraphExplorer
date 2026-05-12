@@ -1,0 +1,72 @@
+@using AdefHelpDeskGraphExplorer.Models.Graph
+
+@if (Node is not null)
+{
+    <div class="node-properties-panel" role="dialog" aria-label="Node properties">
+        <RadzenStack Gap="0.75rem" Style="padding: 1rem; height: 100%; overflow-y: auto;">
+            <RadzenStack Orientation="Orientation.Horizontal"
+                         JustifyContent="JustifyContent.SpaceBetween"
+                         AlignItems="AlignItems.Center">
+                <RadzenBadge Text="@Node.Type" BadgeStyle="BadgeStyle.Info" />
+                <RadzenButton Icon="close"
+                              Variant="Variant.Text"
+                              ButtonStyle="ButtonStyle.Secondary"
+                              Size="ButtonSize.Small"
+                              Click="OnCloseClicked"
+                              title="Close" />
+            </RadzenStack>
+
+            <RadzenText TextStyle="TextStyle.H6" Style="margin: 0;">@Node.Label</RadzenText>
+            <RadzenText TextStyle="TextStyle.Caption" Style="color:#64748b; word-break: break-all;">@Node.Id</RadzenText>
+
+            <hr style="margin: 0.25rem 0;" />
+
+            @if (Node.Data is not null && Node.Data.Count > 0)
+            {
+                @foreach (var kv in Node.Data)
+                {
+                    <RadzenStack Gap="0.1rem">
+                        <RadzenText TextStyle="TextStyle.Caption" Style="color:#64748b;">@kv.Key</RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body2" Style="word-break: break-word; white-space: pre-wrap;">
+                            @(FormatValue(kv.Value))
+                        </RadzenText>
+                    </RadzenStack>
+                }
+            }
+            else
+            {
+                <RadzenText TextStyle="TextStyle.Body2" Style="color:#64748b;">No additional properties.</RadzenText>
+            }
+
+            <RadzenButton Text="Ask about this node →"
+                          ButtonStyle="ButtonStyle.Primary"
+                          Click="OnAskClicked"
+                          Style="margin-top: 0.5rem;" />
+        </RadzenStack>
+    </div>
+}
+
+@code {
+    [Parameter] public GraphNode? Node { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<GraphNode> OnAsk { get; set; }
+
+    private Task OnCloseClicked() => OnClose.InvokeAsync();
+    private Task OnAskClicked() => Node is null ? Task.CompletedTask : OnAsk.InvokeAsync(Node);
+
+    private static string FormatValue(object? value)
+    {
+        if (value is null) return "—";
+        if (value is System.Text.Json.JsonElement el)
+        {
+            return el.ValueKind switch
+            {
+                System.Text.Json.JsonValueKind.String => el.GetString() ?? "—",
+                System.Text.Json.JsonValueKind.Null or System.Text.Json.JsonValueKind.Undefined => "—",
+                _ => el.ToString()
+            };
+        }
+        var s = value.ToString();
+        return string.IsNullOrEmpty(s) ? "—" : s;
+    }
+}

@@ -1,0 +1,4161 @@
+{
+  "version": 1,
+  "generatedUtc": "2026-05-11T23:19:48.7674574Z",
+  "nodes": [
+    {
+      "id": "user:1",
+      "type": "User",
+      "label": "Michael Washington",
+      "data": {
+        "userId": 1,
+        "username": "Webmaster@ADefWebserver.com",
+        "email": "webmaster@adefwebserver.com",
+        "isSuperUser": true
+      }
+    },
+    {
+      "id": "user:2",
+      "type": "User",
+      "label": "Sara Connor",
+      "data": {
+        "userId": 2,
+        "username": "admin2@adefwebserver.com",
+        "email": "admin2@adefwebserver.com",
+        "isSuperUser": true
+      }
+    },
+    {
+      "id": "category:1",
+      "type": "Category",
+      "label": "Internal",
+      "data": {
+        "categoryId": 1,
+        "parentCategoryId": null,
+        "level": 0
+      }
+    },
+    {
+      "id": "category:2",
+      "type": "Category",
+      "label": "Public",
+      "data": {
+        "categoryId": 2,
+        "parentCategoryId": null,
+        "level": 0
+      }
+    },
+    {
+      "id": "category:3",
+      "type": "Category",
+      "label": "Computer",
+      "data": {
+        "categoryId": 3,
+        "parentCategoryId": 2,
+        "level": 0
+      }
+    },
+    {
+      "id": "category:4",
+      "type": "Category",
+      "label": "Internet",
+      "data": {
+        "categoryId": 4,
+        "parentCategoryId": 2,
+        "level": 0
+      }
+    },
+    {
+      "id": "category:5",
+      "type": "Category",
+      "label": "Billing",
+      "data": {
+        "categoryId": 5,
+        "parentCategoryId": 1,
+        "level": 0
+      }
+    },
+    {
+      "id": "category:6",
+      "type": "Category",
+      "label": "Repair",
+      "data": {
+        "categoryId": 6,
+        "parentCategoryId": 1,
+        "level": 0
+      }
+    },
+    {
+      "id": "task:1",
+      "type": "Task",
+      "label": "My Printer does not work",
+      "data": {
+        "taskId": 1,
+        "status": "Resolved",
+        "priority": "High",
+        "createdUtc": "2026-05-09T15:43:17.79",
+        "dueUtc": null,
+        "requesterUserId": 1,
+        "requesterName": "Michael Washington",
+        "assignedRoleId": 2,
+        "description": "My Printer does not work"
+      }
+    },
+    {
+      "id": "task:2",
+      "type": "Task",
+      "label": "Cannot log in to my computer",
+      "data": {
+        "taskId": 2,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:56:05.94",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Alice Johnson",
+        "assignedRoleId": 2,
+        "description": "Cannot log in to my computer"
+      }
+    },
+    {
+      "id": "task:3",
+      "type": "Task",
+      "label": "Email not syncing on Outlook",
+      "data": {
+        "taskId": 3,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:45.517",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Alice Johnson",
+        "assignedRoleId": 2,
+        "description": "Email not syncing on Outlook"
+      }
+    },
+    {
+      "id": "task:4",
+      "type": "Task",
+      "label": "Printer offline in Finance",
+      "data": {
+        "taskId": 4,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:47.003",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Bob Smith",
+        "assignedRoleId": 2,
+        "description": "Printer offline in Finance"
+      }
+    },
+    {
+      "id": "task:5",
+      "type": "Task",
+      "label": "Slow internet connection",
+      "data": {
+        "taskId": 5,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:48.44",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Carol Davis",
+        "assignedRoleId": 2,
+        "description": "Slow internet connection"
+      }
+    },
+    {
+      "id": "task:6",
+      "type": "Task",
+      "label": "Cannot connect to VPN",
+      "data": {
+        "taskId": 6,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:49.74",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "David Martinez",
+        "assignedRoleId": 2,
+        "description": "Cannot connect to VPN"
+      }
+    },
+    {
+      "id": "task:7",
+      "type": "Task",
+      "label": "Computer freezes on startup",
+      "data": {
+        "taskId": 7,
+        "status": "Active",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:51.113",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Eva Thompson",
+        "assignedRoleId": 2,
+        "description": "Computer freezes on startup"
+      }
+    },
+    {
+      "id": "task:8",
+      "type": "Task",
+      "label": "Need software install: Visio",
+      "data": {
+        "taskId": 8,
+        "status": "Active",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:52.56",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Frank Wilson",
+        "assignedRoleId": 2,
+        "description": "Need software install: Visio"
+      }
+    },
+    {
+      "id": "task:9",
+      "type": "Task",
+      "label": "Monitor flickering",
+      "data": {
+        "taskId": 9,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:54.02",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Grace Lee",
+        "assignedRoleId": 2,
+        "description": "Monitor flickering"
+      }
+    },
+    {
+      "id": "task:10",
+      "type": "Task",
+      "label": "Wi-Fi keeps dropping",
+      "data": {
+        "taskId": 10,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:55.557",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Henry Patel",
+        "assignedRoleId": 2,
+        "description": "Wi-Fi keeps dropping"
+      }
+    },
+    {
+      "id": "task:11",
+      "type": "Task",
+      "label": "Forgot password",
+      "data": {
+        "taskId": 11,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:57.03",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Ivy Nguyen",
+        "assignedRoleId": 2,
+        "description": "Forgot password"
+      }
+    },
+    {
+      "id": "task:12",
+      "type": "Task",
+      "label": "Keyboard keys not working",
+      "data": {
+        "taskId": 12,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:58.427",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Jack Brown",
+        "assignedRoleId": 2,
+        "description": "Keyboard keys not working"
+      }
+    },
+    {
+      "id": "task:13",
+      "type": "Task",
+      "label": "Request new mailbox alias",
+      "data": {
+        "taskId": 13,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:57:59.72",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Alice Johnson",
+        "assignedRoleId": 2,
+        "description": "Request new mailbox alias"
+      }
+    },
+    {
+      "id": "task:14",
+      "type": "Task",
+      "label": "Excel crashes opening report",
+      "data": {
+        "taskId": 14,
+        "status": "On Hold",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:01.057",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Bob Smith",
+        "assignedRoleId": 2,
+        "description": "Excel crashes opening report"
+      }
+    },
+    {
+      "id": "task:15",
+      "type": "Task",
+      "label": "Cannot access shared drive",
+      "data": {
+        "taskId": 15,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:02.413",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Carol Davis",
+        "assignedRoleId": 2,
+        "description": "Cannot access shared drive"
+      }
+    },
+    {
+      "id": "task:16",
+      "type": "Task",
+      "label": "Phone not ringing on Teams",
+      "data": {
+        "taskId": 16,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:03.903",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "David Martinez",
+        "assignedRoleId": 2,
+        "description": "Phone not ringing on Teams"
+      }
+    },
+    {
+      "id": "task:17",
+      "type": "Task",
+      "label": "New employee setup",
+      "data": {
+        "taskId": 17,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:05.44",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Eva Thompson",
+        "assignedRoleId": 2,
+        "description": "New employee setup"
+      }
+    },
+    {
+      "id": "task:18",
+      "type": "Task",
+      "label": "Mouse cursor jumping",
+      "data": {
+        "taskId": 18,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:06.913",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Frank Wilson",
+        "assignedRoleId": 2,
+        "description": "Mouse cursor jumping"
+      }
+    },
+    {
+      "id": "task:19",
+      "type": "Task",
+      "label": "Spam filter too aggressive",
+      "data": {
+        "taskId": 19,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:08.373",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Grace Lee",
+        "assignedRoleId": 2,
+        "description": "Spam filter too aggressive"
+      }
+    },
+    {
+      "id": "task:20",
+      "type": "Task",
+      "label": "Blue screen on shutdown",
+      "data": {
+        "taskId": 20,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:10.6",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Henry Patel",
+        "assignedRoleId": 2,
+        "description": "Blue screen on shutdown"
+      }
+    },
+    {
+      "id": "task:21",
+      "type": "Task",
+      "label": "Two-factor authentication failing",
+      "data": {
+        "taskId": 21,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:12.163",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Ivy Nguyen",
+        "assignedRoleId": 2,
+        "description": "Two-factor authentication failing"
+      }
+    },
+    {
+      "id": "task:22",
+      "type": "Task",
+      "label": "Browser homepage hijacked",
+      "data": {
+        "taskId": 22,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:13.647",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Jack Brown",
+        "assignedRoleId": 2,
+        "description": "Browser homepage hijacked"
+      }
+    },
+    {
+      "id": "task:23",
+      "type": "Task",
+      "label": "External monitor not detected",
+      "data": {
+        "taskId": 23,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:15.183",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Alice Johnson",
+        "assignedRoleId": 2,
+        "description": "External monitor not detected"
+      }
+    },
+    {
+      "id": "task:24",
+      "type": "Task",
+      "label": "Need access to project folder",
+      "data": {
+        "taskId": 24,
+        "status": "Resolved",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:16.767",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Carol Davis",
+        "assignedRoleId": 2,
+        "description": "Need access to project folder"
+      }
+    },
+    {
+      "id": "task:25",
+      "type": "Task",
+      "label": "Webcam not working in Teams",
+      "data": {
+        "taskId": 25,
+        "status": "Active",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:18.377",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Eva Thompson",
+        "assignedRoleId": 0,
+        "description": "Webcam not working in Teams"
+      }
+    },
+    {
+      "id": "task:26",
+      "type": "Task",
+      "label": "Printer driver missing after reboot",
+      "data": {
+        "taskId": 26,
+        "status": "Cancelled",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:19.787",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Grace Lee",
+        "assignedRoleId": 0,
+        "description": "Printer driver missing after reboot"
+      }
+    },
+    {
+      "id": "task:27",
+      "type": "Task",
+      "label": "Slow login at start of day",
+      "data": {
+        "taskId": 27,
+        "status": "New",
+        "priority": "Normal",
+        "createdUtc": "2026-05-09T16:58:21.193",
+        "dueUtc": null,
+        "requesterUserId": 0,
+        "requesterName": "Ivy Nguyen",
+        "assignedRoleId": 0,
+        "description": "Slow login at start of day"
+      }
+    },
+    {
+      "id": "detail:1",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 1,
+        "taskId": 1,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T15:43:18.437",
+        "text": "My Printer does not work",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:2",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 2,
+        "taskId": 1,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T15:43:51.783",
+        "text": "I tried to contact customer but got no response will try again later",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:3",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 3,
+        "taskId": 1,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T15:44:27.363",
+        "text": "Trying to contact customer on the phone",
+        "startTime": "2026-05-09T09:30:00",
+        "stopTime": "2026-05-09T09:35:00"
+      }
+    },
+    {
+      "id": "detail:4",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 4,
+        "taskId": 2,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:56:06.613",
+        "text": "Cannot log in to my computer",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:5",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 5,
+        "taskId": 3,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:45.647",
+        "text": "Email not syncing on Outlook",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:6",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 6,
+        "taskId": 4,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:47.083",
+        "text": "Printer offline in Finance",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:7",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 7,
+        "taskId": 5,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:48.497",
+        "text": "Slow internet connection",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:8",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 8,
+        "taskId": 6,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:49.81",
+        "text": "Cannot connect to VPN",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:9",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 9,
+        "taskId": 7,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:51.173",
+        "text": "Computer freezes on startup",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:10",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 10,
+        "taskId": 8,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:52.667",
+        "text": "Need software install: Visio",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:11",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 11,
+        "taskId": 9,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:54.093",
+        "text": "Monitor flickering",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:12",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 12,
+        "taskId": 10,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:55.617",
+        "text": "Wi-Fi keeps dropping",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:13",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 13,
+        "taskId": 11,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:57.093",
+        "text": "Forgot password",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:14",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 14,
+        "taskId": 12,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:58.477",
+        "text": "Keyboard keys not working",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:15",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 15,
+        "taskId": 13,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:57:59.777",
+        "text": "Request new mailbox alias",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:16",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 16,
+        "taskId": 14,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:01.13",
+        "text": "Excel crashes opening report",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:17",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 17,
+        "taskId": 15,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:02.51",
+        "text": "Cannot access shared drive",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:18",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 18,
+        "taskId": 16,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:03.98",
+        "text": "Phone not ringing on Teams",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:19",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 19,
+        "taskId": 17,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:05.53",
+        "text": "New employee setup",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:20",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 20,
+        "taskId": 18,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:07.06",
+        "text": "Mouse cursor jumping",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:21",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 21,
+        "taskId": 19,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:08.577",
+        "text": "Spam filter too aggressive",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:22",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 22,
+        "taskId": 20,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:10.663",
+        "text": "Blue screen on shutdown",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:23",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 23,
+        "taskId": 21,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:12.287",
+        "text": "Two-factor authentication failing",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:24",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 24,
+        "taskId": 22,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:13.74",
+        "text": "Browser homepage hijacked",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:25",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 25,
+        "taskId": 23,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:15.287",
+        "text": "External monitor not detected",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:26",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 26,
+        "taskId": 24,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:16.877",
+        "text": "Need access to project folder",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:27",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 27,
+        "taskId": 25,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:18.46",
+        "text": "Webcam not working in Teams",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:28",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 28,
+        "taskId": 26,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:19.87",
+        "text": "Printer driver missing after reboot",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:29",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 29,
+        "taskId": 27,
+        "detailType": "Comment - Visible",
+        "userId": 0,
+        "insertedUtc": "2026-05-09T16:58:21.25",
+        "text": "Slow login at start of day",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:30",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 30,
+        "taskId": 1,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:03:37.957",
+        "text": "Initial investigation: contacted requester to gather more details about the issue.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:31",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 31,
+        "taskId": 1,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:04:32.463",
+        "text": "Resolved the issue and verified with the requester.",
+        "startTime": "2026-05-09T09:20:00",
+        "stopTime": "2026-05-09T09:25:00"
+      }
+    },
+    {
+      "id": "detail:32",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 32,
+        "taskId": 1,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:05:52.54",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:33",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 33,
+        "taskId": 1,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:05:55.047",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:34",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 34,
+        "taskId": 2,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:05:59.62",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:35",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 35,
+        "taskId": 2,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:02.313",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:36",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 36,
+        "taskId": 3,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:06.83",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:37",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 37,
+        "taskId": 3,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:09.533",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:38",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 38,
+        "taskId": 4,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:14.05",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:39",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 39,
+        "taskId": 4,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:16.72",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:40",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 40,
+        "taskId": 5,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:21.26",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:41",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 41,
+        "taskId": 5,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:23.96",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:42",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 42,
+        "taskId": 6,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:28.507",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:43",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 43,
+        "taskId": 6,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:31.173",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:44",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 44,
+        "taskId": 7,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:35.713",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:45",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 45,
+        "taskId": 7,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:38.377",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:46",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 46,
+        "taskId": 8,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:42.867",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:47",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 47,
+        "taskId": 8,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:45.55",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:48",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 48,
+        "taskId": 9,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:50.117",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:49",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 49,
+        "taskId": 9,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:52.833",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:50",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 50,
+        "taskId": 10,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:06:57.313",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:51",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 51,
+        "taskId": 10,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:00.007",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:52",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 52,
+        "taskId": 11,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:04.523",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:53",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 53,
+        "taskId": 11,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:07.203",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:54",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 54,
+        "taskId": 12,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:11.82",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:55",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 55,
+        "taskId": 12,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:14.64",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:56",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 56,
+        "taskId": 13,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:19.483",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:57",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 57,
+        "taskId": 13,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:22.12",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:58",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 58,
+        "taskId": 14,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:26.893",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:59",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 59,
+        "taskId": 14,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:29.59",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:60",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 60,
+        "taskId": 15,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:34.293",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:61",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 61,
+        "taskId": 15,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:36.99",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:62",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 62,
+        "taskId": 16,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:41.723",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:63",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 63,
+        "taskId": 16,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:44.353",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:64",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 64,
+        "taskId": 17,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:48.967",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:65",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 65,
+        "taskId": 17,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:51.753",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:66",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 66,
+        "taskId": 18,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:56.243",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:67",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 67,
+        "taskId": 18,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:07:58.96",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:68",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 68,
+        "taskId": 19,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:03.547",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:69",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 69,
+        "taskId": 19,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:06.217",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:70",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 70,
+        "taskId": 20,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:10.743",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:71",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 71,
+        "taskId": 20,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:13.493",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:72",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 72,
+        "taskId": 21,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:18.07",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:73",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 73,
+        "taskId": 21,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:20.76",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:74",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 74,
+        "taskId": 22,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:25.47",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:75",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 75,
+        "taskId": 22,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:28.25",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:76",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 76,
+        "taskId": 23,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:32.883",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:77",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 77,
+        "taskId": 23,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:35.623",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:78",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 78,
+        "taskId": 24,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:40.377",
+        "text": "Initial diagnosis: reviewed the reported issue, reproduced the symptom, and started remediation steps.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:79",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 79,
+        "taskId": 24,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:43.213",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:81",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 81,
+        "taskId": 25,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:50.64",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:83",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 83,
+        "taskId": 26,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:08:58.04",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:85",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 85,
+        "taskId": 27,
+        "detailType": "Work",
+        "userId": 1,
+        "insertedUtc": "2026-05-09T17:09:05.47",
+        "text": "Diagnosis and initial remediation work performed by the help desk.",
+        "startTime": "2026-05-09T09:10:00",
+        "stopTime": "2026-05-09T09:15:00"
+      }
+    },
+    {
+      "id": "detail:86",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 86,
+        "taskId": 1,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:09:52.317",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:87",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 87,
+        "taskId": 1,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:09:54.847",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:88",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 88,
+        "taskId": 2,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:02.553",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:89",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 89,
+        "taskId": 2,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:05.223",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:90",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 90,
+        "taskId": 3,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:12.887",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:91",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 91,
+        "taskId": 3,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:15.527",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:92",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 92,
+        "taskId": 4,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:23.31",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:93",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 93,
+        "taskId": 4,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:26.08",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:94",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 94,
+        "taskId": 5,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:33.763",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:95",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 95,
+        "taskId": 5,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:36.46",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:96",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 96,
+        "taskId": 6,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:44.103",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:97",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 97,
+        "taskId": 6,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:46.883",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:99",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 99,
+        "taskId": 7,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:10:57.6",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:101",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 101,
+        "taskId": 8,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:08.257",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:102",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 102,
+        "taskId": 9,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:16.207",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:103",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 103,
+        "taskId": 9,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:19.21",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:104",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 104,
+        "taskId": 10,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:26.877",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:105",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 105,
+        "taskId": 10,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:29.61",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:106",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 106,
+        "taskId": 11,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:37.45",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:107",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 107,
+        "taskId": 11,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:40.117",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:108",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 108,
+        "taskId": 12,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:47.81",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:109",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 109,
+        "taskId": 12,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:50.48",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:110",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 110,
+        "taskId": 13,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:11:58.263",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:111",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 111,
+        "taskId": 13,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:00.917",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:112",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 112,
+        "taskId": 14,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:08.977",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:113",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 113,
+        "taskId": 14,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:11.81",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:114",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 114,
+        "taskId": 15,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:19.737",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:115",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 115,
+        "taskId": 15,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:22.47",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:116",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 116,
+        "taskId": 16,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:30.07",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:117",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 117,
+        "taskId": 16,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:32.79",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:118",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 118,
+        "taskId": 17,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:40.45",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:119",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 119,
+        "taskId": 17,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:43.187",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:120",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 120,
+        "taskId": 18,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:50.883",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:121",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 121,
+        "taskId": 18,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:12:53.603",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:122",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 122,
+        "taskId": 19,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:01.347",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:123",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 123,
+        "taskId": 19,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:03.95",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:124",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 124,
+        "taskId": 20,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:12.163",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:125",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 125,
+        "taskId": 20,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:14.607",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:126",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 126,
+        "taskId": 21,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:22.23",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:127",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 127,
+        "taskId": 21,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:24.83",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:128",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 128,
+        "taskId": 22,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:32.56",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:129",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 129,
+        "taskId": 22,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:35.21",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:130",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 130,
+        "taskId": 23,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:42.89",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:131",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 131,
+        "taskId": 23,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:45.54",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:132",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 132,
+        "taskId": 24,
+        "detailType": "Comment - Visible",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:53.343",
+        "text": "Verification: confirmed the fix resolved the issue and validated with the requester. Closing this ticket.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:133",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 133,
+        "taskId": 24,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:13:56.043",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:135",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 135,
+        "taskId": 25,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:14:06.46",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:137",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 137,
+        "taskId": 26,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:14:16.743",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:139",
+      "type": "TaskDetail",
+      "label": "Work",
+      "data": {
+        "detailId": 139,
+        "taskId": 27,
+        "detailType": "Work",
+        "userId": 2,
+        "insertedUtc": "2026-05-09T17:14:27.24",
+        "text": "Final verification, validation with the requester, and closure tasks.",
+        "startTime": "2026-05-09T09:00:00",
+        "stopTime": "2026-05-09T09:05:00"
+      }
+    },
+    {
+      "id": "detail:140",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 140,
+        "taskId": 14,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-10T18:47:12.777",
+        "text": "Customer called back. The orginal issue persists.",
+        "startTime": null,
+        "stopTime": null
+      }
+    },
+    {
+      "id": "detail:141",
+      "type": "TaskDetail",
+      "label": "Comment - Visible",
+      "data": {
+        "detailId": 141,
+        "taskId": 26,
+        "detailType": "Comment - Visible",
+        "userId": 1,
+        "insertedUtc": "2026-05-10T18:50:15.263",
+        "text": "Customer syas the problem is fixed.",
+        "startTime": null,
+        "stopTime": null
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "task:1",
+      "target": "user:1",
+      "type": "REQUESTED_BY"
+    },
+    {
+      "id": "e2",
+      "source": "task:1",
+      "target": "category:6",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e3",
+      "source": "task:1",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e4",
+      "source": "task:2",
+      "target": "category:6",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e5",
+      "source": "task:2",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e6",
+      "source": "task:3",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e7",
+      "source": "task:5",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e8",
+      "source": "task:9",
+      "target": "category:6",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e9",
+      "source": "task:9",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e10",
+      "source": "task:10",
+      "target": "category:5",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e11",
+      "source": "task:10",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e12",
+      "source": "task:11",
+      "target": "category:5",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e13",
+      "source": "task:11",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e14",
+      "source": "task:12",
+      "target": "category:6",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e15",
+      "source": "task:12",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e16",
+      "source": "task:13",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e17",
+      "source": "task:15",
+      "target": "category:5",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e18",
+      "source": "task:15",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e19",
+      "source": "task:17",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e20",
+      "source": "task:18",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e21",
+      "source": "task:19",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e22",
+      "source": "task:20",
+      "target": "category:5",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e23",
+      "source": "task:20",
+      "target": "category:6",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e24",
+      "source": "task:20",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e25",
+      "source": "task:21",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e26",
+      "source": "task:23",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e27",
+      "source": "task:7",
+      "target": "category:5",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e28",
+      "source": "task:7",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e29",
+      "source": "task:14",
+      "target": "category:3",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e30",
+      "source": "task:14",
+      "target": "category:4",
+      "type": "IN_CATEGORY"
+    },
+    {
+      "id": "e31",
+      "source": "category:3",
+      "target": "category:2",
+      "type": "CHILD_OF"
+    },
+    {
+      "id": "e32",
+      "source": "category:4",
+      "target": "category:2",
+      "type": "CHILD_OF"
+    },
+    {
+      "id": "e33",
+      "source": "category:5",
+      "target": "category:1",
+      "type": "CHILD_OF"
+    },
+    {
+      "id": "e34",
+      "source": "category:6",
+      "target": "category:1",
+      "type": "CHILD_OF"
+    },
+    {
+      "id": "e35",
+      "source": "task:1",
+      "target": "detail:1",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e36",
+      "source": "user:1",
+      "target": "detail:1",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e37",
+      "source": "task:1",
+      "target": "detail:2",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e38",
+      "source": "user:1",
+      "target": "detail:2",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e39",
+      "source": "task:1",
+      "target": "detail:3",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e40",
+      "source": "user:1",
+      "target": "detail:3",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e41",
+      "source": "task:2",
+      "target": "detail:4",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e42",
+      "source": "task:3",
+      "target": "detail:5",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e43",
+      "source": "task:4",
+      "target": "detail:6",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e44",
+      "source": "task:5",
+      "target": "detail:7",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e45",
+      "source": "task:6",
+      "target": "detail:8",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e46",
+      "source": "task:7",
+      "target": "detail:9",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e47",
+      "source": "task:8",
+      "target": "detail:10",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e48",
+      "source": "task:9",
+      "target": "detail:11",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e49",
+      "source": "task:10",
+      "target": "detail:12",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e50",
+      "source": "task:11",
+      "target": "detail:13",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e51",
+      "source": "task:12",
+      "target": "detail:14",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e52",
+      "source": "task:13",
+      "target": "detail:15",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e53",
+      "source": "task:14",
+      "target": "detail:16",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e54",
+      "source": "task:15",
+      "target": "detail:17",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e55",
+      "source": "task:16",
+      "target": "detail:18",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e56",
+      "source": "task:17",
+      "target": "detail:19",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e57",
+      "source": "task:18",
+      "target": "detail:20",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e58",
+      "source": "task:19",
+      "target": "detail:21",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e59",
+      "source": "task:20",
+      "target": "detail:22",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e60",
+      "source": "task:21",
+      "target": "detail:23",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e61",
+      "source": "task:22",
+      "target": "detail:24",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e62",
+      "source": "task:23",
+      "target": "detail:25",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e63",
+      "source": "task:24",
+      "target": "detail:26",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e64",
+      "source": "task:25",
+      "target": "detail:27",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e65",
+      "source": "task:26",
+      "target": "detail:28",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e66",
+      "source": "task:27",
+      "target": "detail:29",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e67",
+      "source": "task:1",
+      "target": "detail:30",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e68",
+      "source": "user:1",
+      "target": "detail:30",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e69",
+      "source": "task:1",
+      "target": "detail:31",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e70",
+      "source": "user:1",
+      "target": "detail:31",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e71",
+      "source": "task:1",
+      "target": "detail:32",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e72",
+      "source": "user:1",
+      "target": "detail:32",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e73",
+      "source": "task:1",
+      "target": "detail:33",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e74",
+      "source": "user:1",
+      "target": "detail:33",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e75",
+      "source": "task:2",
+      "target": "detail:34",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e76",
+      "source": "user:1",
+      "target": "detail:34",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e77",
+      "source": "task:2",
+      "target": "detail:35",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e78",
+      "source": "user:1",
+      "target": "detail:35",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e79",
+      "source": "task:3",
+      "target": "detail:36",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e80",
+      "source": "user:1",
+      "target": "detail:36",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e81",
+      "source": "task:3",
+      "target": "detail:37",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e82",
+      "source": "user:1",
+      "target": "detail:37",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e83",
+      "source": "task:4",
+      "target": "detail:38",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e84",
+      "source": "user:1",
+      "target": "detail:38",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e85",
+      "source": "task:4",
+      "target": "detail:39",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e86",
+      "source": "user:1",
+      "target": "detail:39",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e87",
+      "source": "task:5",
+      "target": "detail:40",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e88",
+      "source": "user:1",
+      "target": "detail:40",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e89",
+      "source": "task:5",
+      "target": "detail:41",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e90",
+      "source": "user:1",
+      "target": "detail:41",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e91",
+      "source": "task:6",
+      "target": "detail:42",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e92",
+      "source": "user:1",
+      "target": "detail:42",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e93",
+      "source": "task:6",
+      "target": "detail:43",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e94",
+      "source": "user:1",
+      "target": "detail:43",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e95",
+      "source": "task:7",
+      "target": "detail:44",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e96",
+      "source": "user:1",
+      "target": "detail:44",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e97",
+      "source": "task:7",
+      "target": "detail:45",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e98",
+      "source": "user:1",
+      "target": "detail:45",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e99",
+      "source": "task:8",
+      "target": "detail:46",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e100",
+      "source": "user:1",
+      "target": "detail:46",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e101",
+      "source": "task:8",
+      "target": "detail:47",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e102",
+      "source": "user:1",
+      "target": "detail:47",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e103",
+      "source": "task:9",
+      "target": "detail:48",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e104",
+      "source": "user:1",
+      "target": "detail:48",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e105",
+      "source": "task:9",
+      "target": "detail:49",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e106",
+      "source": "user:1",
+      "target": "detail:49",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e107",
+      "source": "task:10",
+      "target": "detail:50",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e108",
+      "source": "user:1",
+      "target": "detail:50",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e109",
+      "source": "task:10",
+      "target": "detail:51",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e110",
+      "source": "user:1",
+      "target": "detail:51",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e111",
+      "source": "task:11",
+      "target": "detail:52",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e112",
+      "source": "user:1",
+      "target": "detail:52",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e113",
+      "source": "task:11",
+      "target": "detail:53",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e114",
+      "source": "user:1",
+      "target": "detail:53",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e115",
+      "source": "task:12",
+      "target": "detail:54",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e116",
+      "source": "user:1",
+      "target": "detail:54",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e117",
+      "source": "task:12",
+      "target": "detail:55",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e118",
+      "source": "user:1",
+      "target": "detail:55",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e119",
+      "source": "task:13",
+      "target": "detail:56",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e120",
+      "source": "user:1",
+      "target": "detail:56",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e121",
+      "source": "task:13",
+      "target": "detail:57",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e122",
+      "source": "user:1",
+      "target": "detail:57",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e123",
+      "source": "task:14",
+      "target": "detail:58",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e124",
+      "source": "user:1",
+      "target": "detail:58",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e125",
+      "source": "task:14",
+      "target": "detail:59",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e126",
+      "source": "user:1",
+      "target": "detail:59",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e127",
+      "source": "task:15",
+      "target": "detail:60",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e128",
+      "source": "user:1",
+      "target": "detail:60",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e129",
+      "source": "task:15",
+      "target": "detail:61",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e130",
+      "source": "user:1",
+      "target": "detail:61",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e131",
+      "source": "task:16",
+      "target": "detail:62",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e132",
+      "source": "user:1",
+      "target": "detail:62",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e133",
+      "source": "task:16",
+      "target": "detail:63",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e134",
+      "source": "user:1",
+      "target": "detail:63",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e135",
+      "source": "task:17",
+      "target": "detail:64",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e136",
+      "source": "user:1",
+      "target": "detail:64",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e137",
+      "source": "task:17",
+      "target": "detail:65",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e138",
+      "source": "user:1",
+      "target": "detail:65",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e139",
+      "source": "task:18",
+      "target": "detail:66",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e140",
+      "source": "user:1",
+      "target": "detail:66",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e141",
+      "source": "task:18",
+      "target": "detail:67",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e142",
+      "source": "user:1",
+      "target": "detail:67",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e143",
+      "source": "task:19",
+      "target": "detail:68",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e144",
+      "source": "user:1",
+      "target": "detail:68",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e145",
+      "source": "task:19",
+      "target": "detail:69",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e146",
+      "source": "user:1",
+      "target": "detail:69",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e147",
+      "source": "task:20",
+      "target": "detail:70",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e148",
+      "source": "user:1",
+      "target": "detail:70",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e149",
+      "source": "task:20",
+      "target": "detail:71",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e150",
+      "source": "user:1",
+      "target": "detail:71",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e151",
+      "source": "task:21",
+      "target": "detail:72",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e152",
+      "source": "user:1",
+      "target": "detail:72",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e153",
+      "source": "task:21",
+      "target": "detail:73",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e154",
+      "source": "user:1",
+      "target": "detail:73",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e155",
+      "source": "task:22",
+      "target": "detail:74",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e156",
+      "source": "user:1",
+      "target": "detail:74",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e157",
+      "source": "task:22",
+      "target": "detail:75",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e158",
+      "source": "user:1",
+      "target": "detail:75",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e159",
+      "source": "task:23",
+      "target": "detail:76",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e160",
+      "source": "user:1",
+      "target": "detail:76",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e161",
+      "source": "task:23",
+      "target": "detail:77",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e162",
+      "source": "user:1",
+      "target": "detail:77",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e163",
+      "source": "task:24",
+      "target": "detail:78",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e164",
+      "source": "user:1",
+      "target": "detail:78",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e165",
+      "source": "task:24",
+      "target": "detail:79",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e166",
+      "source": "user:1",
+      "target": "detail:79",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e167",
+      "source": "task:25",
+      "target": "detail:81",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e168",
+      "source": "user:1",
+      "target": "detail:81",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e169",
+      "source": "task:26",
+      "target": "detail:83",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e170",
+      "source": "user:1",
+      "target": "detail:83",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e171",
+      "source": "task:27",
+      "target": "detail:85",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e172",
+      "source": "user:1",
+      "target": "detail:85",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e173",
+      "source": "task:1",
+      "target": "detail:86",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e174",
+      "source": "user:2",
+      "target": "detail:86",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e175",
+      "source": "task:1",
+      "target": "detail:87",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e176",
+      "source": "user:2",
+      "target": "detail:87",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e177",
+      "source": "task:2",
+      "target": "detail:88",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e178",
+      "source": "user:2",
+      "target": "detail:88",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e179",
+      "source": "task:2",
+      "target": "detail:89",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e180",
+      "source": "user:2",
+      "target": "detail:89",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e181",
+      "source": "task:3",
+      "target": "detail:90",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e182",
+      "source": "user:2",
+      "target": "detail:90",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e183",
+      "source": "task:3",
+      "target": "detail:91",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e184",
+      "source": "user:2",
+      "target": "detail:91",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e185",
+      "source": "task:4",
+      "target": "detail:92",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e186",
+      "source": "user:2",
+      "target": "detail:92",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e187",
+      "source": "task:4",
+      "target": "detail:93",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e188",
+      "source": "user:2",
+      "target": "detail:93",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e189",
+      "source": "task:5",
+      "target": "detail:94",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e190",
+      "source": "user:2",
+      "target": "detail:94",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e191",
+      "source": "task:5",
+      "target": "detail:95",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e192",
+      "source": "user:2",
+      "target": "detail:95",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e193",
+      "source": "task:6",
+      "target": "detail:96",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e194",
+      "source": "user:2",
+      "target": "detail:96",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e195",
+      "source": "task:6",
+      "target": "detail:97",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e196",
+      "source": "user:2",
+      "target": "detail:97",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e197",
+      "source": "task:7",
+      "target": "detail:99",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e198",
+      "source": "user:2",
+      "target": "detail:99",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e199",
+      "source": "task:8",
+      "target": "detail:101",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e200",
+      "source": "user:2",
+      "target": "detail:101",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e201",
+      "source": "task:9",
+      "target": "detail:102",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e202",
+      "source": "user:2",
+      "target": "detail:102",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e203",
+      "source": "task:9",
+      "target": "detail:103",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e204",
+      "source": "user:2",
+      "target": "detail:103",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e205",
+      "source": "task:10",
+      "target": "detail:104",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e206",
+      "source": "user:2",
+      "target": "detail:104",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e207",
+      "source": "task:10",
+      "target": "detail:105",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e208",
+      "source": "user:2",
+      "target": "detail:105",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e209",
+      "source": "task:11",
+      "target": "detail:106",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e210",
+      "source": "user:2",
+      "target": "detail:106",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e211",
+      "source": "task:11",
+      "target": "detail:107",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e212",
+      "source": "user:2",
+      "target": "detail:107",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e213",
+      "source": "task:12",
+      "target": "detail:108",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e214",
+      "source": "user:2",
+      "target": "detail:108",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e215",
+      "source": "task:12",
+      "target": "detail:109",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e216",
+      "source": "user:2",
+      "target": "detail:109",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e217",
+      "source": "task:13",
+      "target": "detail:110",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e218",
+      "source": "user:2",
+      "target": "detail:110",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e219",
+      "source": "task:13",
+      "target": "detail:111",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e220",
+      "source": "user:2",
+      "target": "detail:111",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e221",
+      "source": "task:14",
+      "target": "detail:112",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e222",
+      "source": "user:2",
+      "target": "detail:112",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e223",
+      "source": "task:14",
+      "target": "detail:113",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e224",
+      "source": "user:2",
+      "target": "detail:113",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e225",
+      "source": "task:15",
+      "target": "detail:114",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e226",
+      "source": "user:2",
+      "target": "detail:114",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e227",
+      "source": "task:15",
+      "target": "detail:115",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e228",
+      "source": "user:2",
+      "target": "detail:115",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e229",
+      "source": "task:16",
+      "target": "detail:116",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e230",
+      "source": "user:2",
+      "target": "detail:116",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e231",
+      "source": "task:16",
+      "target": "detail:117",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e232",
+      "source": "user:2",
+      "target": "detail:117",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e233",
+      "source": "task:17",
+      "target": "detail:118",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e234",
+      "source": "user:2",
+      "target": "detail:118",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e235",
+      "source": "task:17",
+      "target": "detail:119",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e236",
+      "source": "user:2",
+      "target": "detail:119",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e237",
+      "source": "task:18",
+      "target": "detail:120",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e238",
+      "source": "user:2",
+      "target": "detail:120",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e239",
+      "source": "task:18",
+      "target": "detail:121",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e240",
+      "source": "user:2",
+      "target": "detail:121",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e241",
+      "source": "task:19",
+      "target": "detail:122",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e242",
+      "source": "user:2",
+      "target": "detail:122",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e243",
+      "source": "task:19",
+      "target": "detail:123",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e244",
+      "source": "user:2",
+      "target": "detail:123",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e245",
+      "source": "task:20",
+      "target": "detail:124",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e246",
+      "source": "user:2",
+      "target": "detail:124",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e247",
+      "source": "task:20",
+      "target": "detail:125",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e248",
+      "source": "user:2",
+      "target": "detail:125",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e249",
+      "source": "task:21",
+      "target": "detail:126",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e250",
+      "source": "user:2",
+      "target": "detail:126",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e251",
+      "source": "task:21",
+      "target": "detail:127",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e252",
+      "source": "user:2",
+      "target": "detail:127",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e253",
+      "source": "task:22",
+      "target": "detail:128",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e254",
+      "source": "user:2",
+      "target": "detail:128",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e255",
+      "source": "task:22",
+      "target": "detail:129",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e256",
+      "source": "user:2",
+      "target": "detail:129",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e257",
+      "source": "task:23",
+      "target": "detail:130",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e258",
+      "source": "user:2",
+      "target": "detail:130",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e259",
+      "source": "task:23",
+      "target": "detail:131",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e260",
+      "source": "user:2",
+      "target": "detail:131",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e261",
+      "source": "task:24",
+      "target": "detail:132",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e262",
+      "source": "user:2",
+      "target": "detail:132",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e263",
+      "source": "task:24",
+      "target": "detail:133",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e264",
+      "source": "user:2",
+      "target": "detail:133",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e265",
+      "source": "task:25",
+      "target": "detail:135",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e266",
+      "source": "user:2",
+      "target": "detail:135",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e267",
+      "source": "task:26",
+      "target": "detail:137",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e268",
+      "source": "user:2",
+      "target": "detail:137",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e269",
+      "source": "task:27",
+      "target": "detail:139",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e270",
+      "source": "user:2",
+      "target": "detail:139",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e271",
+      "source": "task:14",
+      "target": "detail:140",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e272",
+      "source": "user:1",
+      "target": "detail:140",
+      "type": "AUTHORED"
+    },
+    {
+      "id": "e273",
+      "source": "task:26",
+      "target": "detail:141",
+      "type": "HAS_DETAIL"
+    },
+    {
+      "id": "e274",
+      "source": "user:1",
+      "target": "detail:141",
+      "type": "AUTHORED"
+    }
+  ]
+}

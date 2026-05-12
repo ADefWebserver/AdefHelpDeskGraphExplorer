@@ -1,0 +1,328 @@
+@page "/settings"
+@using AdefHelpDeskGraphExplorer.Services.AI
+@using AdefHelpDeskGraphExplorer.Services.HelpDesk
+@using AdefHelpDeskGraphExplorer.Models
+@inject NotificationService NotificationService
+@inject AIConfigurationService SettingsService
+@inject AIModelService AIModelService
+@inject ChatService ChatService
+@inject ConnectionTester DbTester
+@inject IConfiguration Configuration
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Settings</PageTitle>
+
+<h3>Database</h3>
+
+<RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-12">
+    <RadzenColumn Size="12" SizeMD="8">
+        <RadzenStack Gap="0.75rem">
+            <RadzenFormField Text="ADefHelpDesk connection string:" Variant="@variant">
+                <RadzenTextBox @bind-Value="@ConnectionString" Style="width:600px;" />
+            </RadzenFormField>
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+                <RadzenButton Text="Test connection" Icon="link" ButtonStyle="ButtonStyle.Light"
+                              Click="TestDb" IsBusy="@isTestingDb" />
+                @if (!string.IsNullOrEmpty(dbStatus))
+                {
+                    <RadzenText TextStyle="TextStyle.Body2" Style="@(dbOk ? "color:#16a34a;" : "color:#dc2626;")">@dbStatus</RadzenText>
+                }
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>
+
+<h3>AI Settings</h3>
+
+<RadzenRow AlignItems="AlignItems.Start" Wrap="FlexWrap.Wrap" Gap="1rem" Class="rz-p-sm-12">
+    <RadzenColumn Size="12" SizeMD="8">
+        <RadzenStack Gap="0.75rem">
+
+            <RadzenFormField Text="AI Service Type:" Variant="@variant">
+                <RadzenDropDown TValue="string"
+                                Data="@colAITypes"
+                                @bind-Value="@AIType"
+                                Style="width:300px"
+                                Change="@(args => ChangeAIType(args))" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="API Key:" Variant="@variant">
+                <RadzenTextBox @bind-Value="@ApiKey"
+                               @onkeydown="APIKeyDetection"
+                               Style="width:450px;" />
+            </RadzenFormField>
+
+            @if (AIType == "Azure OpenAI")
+            {
+                <RadzenFormField Text="Azure OpenAI Endpoint:" Variant="@variant">
+                    <RadzenTextBox @bind-Value="@Endpoint" Style="width:450px;" />
+                </RadzenFormField>
+                <RadzenFormField Text="Azure OpenAI API Version:" Variant="@variant">
+                    <RadzenTextBox @bind-Value="@ApiVersion" Style="width:450px;" />
+                </RadzenFormField>
+            }
+
+            <RadzenFormField Text="@ModelFieldLabel" Variant="@variant">
+                <RadzenStack Orientation="Orientation.Horizontal" Gap="4" AlignItems="AlignItems.Center">
+                    <RadzenDropDown TValue="string"
+                                    Data="@availableModels"
+                                    @bind-Value="@AIModel"
+                                    Style="width:350px;"
+                                    AllowFiltering="true"
+                                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                    AllowClear="true"
+                                    Placeholder="Select or type a model..." />
+                    <RadzenButton Icon="refresh"
+                                  ButtonStyle="ButtonStyle.Light"
+                                  Size="ButtonSize.Small"
+                                  Click="@RefreshModels"
+                                  IsBusy="@isLoadingModels"
+                                  title="Refresh models from API" />
+                </RadzenStack>
+            </RadzenFormField>
+
+            @if (isLoadingModels)
+            {
+                <RadzenText TextStyle="TextStyle.Caption" Style="color:#6b7280;">
+                    <RadzenIcon Icon="hourglass_empty" Style="font-size:14px;" />
+                    Loading available models...
+                </RadzenText>
+            }
+
+            @if (!IsSettingsEntered)
+            {
+                <RadzenStack Gap="0.5rem">
+                    @switch (AIType)
+                    {
+                        case "OpenAI":
+                            <RadzenButton Text="Get OpenAI API Key" Icon="open_in_new"
+                                          ButtonStyle="ButtonStyle.Light"
+                                          Click="@(() => OpenUrl("https://platform.openai.com/account/api-keys"))"
+                                          Style="width:300px" />
+                            break;
+                        case "Azure OpenAI":
+                            <RadzenButton Text="Create Azure OpenAI Resource" Icon="open_in_new"
+                                          ButtonStyle="ButtonStyle.Light"
+                                          Click="@(() => OpenUrl("https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/create-resource?pivots=web-portal"))"
+                                          Style="width:300px" />
+                            break;
+                        case "Anthropic":
+                            <RadzenButton Text="Get Anthropic API Key" Icon="open_in_new"
+                                          ButtonStyle="ButtonStyle.Light"
+                                          Click="@(() => OpenUrl("https://console.anthropic.com/settings/keys"))"
+                                          Style="width:300px" />
+                            break;
+                        case "Google AI":
+                            <RadzenButton Text="Get Google AI API Key" Icon="open_in_new"
+                                          ButtonStyle="ButtonStyle.Light"
+                                          Click="@(() => OpenUrl("https://aistudio.google.com/app/apikey"))"
+                                          Style="width:300px" />
+                            break;
+                    }
+                </RadzenStack>
+            }
+            else
+            {
+                <RadzenButton Text="Save" ButtonStyle="ButtonStyle.Primary"
+                              Click="SettingsSave"
+                              IsBusy="@isSaving"
+                              Style="margin-bottom:10px;width:500px" />
+            }
+        </RadzenStack>
+    </RadzenColumn>
+</RadzenRow>
+
+@code {
+    [Parameter] public EventCallback SettingsChanged { get; set; }
+
+    Variant variant = Variant.Outlined;
+
+    string AIType = "OpenAI";
+    string ApiKey = "";
+    string Endpoint = "";
+    string ApiVersion = "";
+    string AIModel = "gpt-4o-mini";
+
+    string ConnectionString = "";
+    string dbStatus = "";
+    bool dbOk;
+    bool isTestingDb;
+
+    List<string> colAITypes = new() { "OpenAI", "Azure OpenAI", "Anthropic", "Google AI" };
+    List<string> availableModels = new();
+
+    bool isLoadingModels;
+    bool isSaving;
+    bool IsSettingsEntered;
+
+    string ModelFieldLabel => AIType switch
+    {
+        "Azure OpenAI" => "Azure OpenAI Model Deployment Name:",
+        "Anthropic"    => "Anthropic Model:",
+        "Google AI"    => "Google AI Model:",
+        _              => "Default AI Model:"
+    };
+
+    string ProviderKey => AIType switch
+    {
+        "Azure OpenAI" => "AzureOpenAI",
+        "Google AI"    => "GoogleAI",
+        _              => AIType
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        AIType = MapKeyToDisplay(SettingsService.GetActiveProvider());
+        LoadFromConfig();
+        ConnectionString = Configuration.GetConnectionString("ADefHelpDesk") ?? "";
+        IsSettingsEntered = !string.IsNullOrEmpty(ApiKey) && ApiKey.Length > 1;
+        await LoadModelsAsync();
+    }
+
+    static string MapKeyToDisplay(string key) => key switch
+    {
+        "AzureOpenAI" => "Azure OpenAI",
+        "GoogleAI"    => "Google AI",
+        _             => key
+    };
+
+    void LoadFromConfig()
+    {
+        var p = SettingsService.GetProvider(ProviderKey);
+        ApiKey = p.ApiKey ?? "";
+        Endpoint = p.Endpoint ?? "";
+        ApiVersion = p.ApiVersion ?? "";
+        AIModel = string.Equals(ProviderKey, "AzureOpenAI", StringComparison.OrdinalIgnoreCase)
+            ? (p.DeploymentName ?? "")
+            : (p.DefaultModel ?? DefaultModelFor(AIType));
+    }
+
+    static string DefaultModelFor(string type) => type switch
+    {
+        "OpenAI"      => "gpt-4o-mini",
+        "Anthropic"   => "claude-sonnet-4-20250514",
+        "Google AI"   => "gemini-2.5-flash",
+        _             => ""
+    };
+
+    async Task ChangeAIType(object args)
+    {
+        LoadFromConfig();
+        AIModel = string.IsNullOrWhiteSpace(AIModel) ? DefaultModelFor(AIType) : AIModel;
+        IsSettingsEntered = !string.IsNullOrEmpty(ApiKey) && ApiKey.Length > 1;
+        await LoadModelsAsync();
+    }
+
+    void APIKeyDetection() => IsSettingsEntered = true;
+
+    async Task LoadModelsAsync()
+    {
+        isLoadingModels = true;
+        try
+        {
+            availableModels = await AIModelService.GetModelsAsync(ProviderKey);
+            if (!string.IsNullOrWhiteSpace(AIModel) && !availableModels.Contains(AIModel))
+                availableModels.Insert(0, AIModel);
+        }
+        finally
+        {
+            isLoadingModels = false;
+        }
+    }
+
+    async Task RefreshModels()
+    {
+        isLoadingModels = true;
+        try
+        {
+            availableModels = await AIModelService.RefreshModelsAsync(ProviderKey, ApiKey, Endpoint);
+            if (!string.IsNullOrWhiteSpace(AIModel) && !availableModels.Contains(AIModel))
+                availableModels.Insert(0, AIModel);
+            NotificationService.Notify(NotificationSeverity.Success, "Models refreshed", duration: 2000);
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, "Refresh failed", ex.Message, 4000);
+        }
+        finally
+        {
+            isLoadingModels = false;
+        }
+    }
+
+    async Task TestDb()
+    {
+        isTestingDb = true;
+        try
+        {
+            var (ok, msg) = await DbTester.TestAsync(ConnectionString, CancellationToken.None);
+            dbOk = ok;
+            dbStatus = ok ? $"✔ {msg}" : $"✖ {msg}";
+        }
+        catch (Exception ex)
+        {
+            dbOk = false;
+            dbStatus = $"✖ {ex.Message}";
+        }
+        finally
+        {
+            isTestingDb = false;
+        }
+    }
+
+    async Task SettingsSave()
+    {
+        if (string.IsNullOrWhiteSpace(ApiKey))
+        {
+            NotificationService.Notify(NotificationSeverity.Warning, "API Key required", duration: 3000);
+            return;
+        }
+        if (AIType == "OpenAI" && !ApiKey.StartsWith("sk-", StringComparison.Ordinal))
+        {
+            NotificationService.Notify(NotificationSeverity.Warning, "Invalid API Key", "OpenAI keys start with 'sk-'.", 4000);
+            return;
+        }
+
+        isSaving = true;
+        try
+        {
+            await SettingsService.SaveSettingsAsync(
+                providerKey: ProviderKey,
+                apiKey: ApiKey,
+                defaultModel: AIModel,
+                endpoint: string.IsNullOrWhiteSpace(Endpoint) ? null : Endpoint,
+                apiVersion: AIType == "Azure OpenAI" ? ApiVersion : null,
+                deploymentName: AIType == "Azure OpenAI" ? AIModel : null,
+                enabled: true,
+                setActive: true);
+
+            NotificationService.Notify(NotificationSeverity.Success, "Saved", "Settings written to appsettings.", 2500);
+
+            try
+            {
+                var result = await ChatService.TestAccessAsync(ProviderKey, AIModel);
+                NotificationService.Notify(NotificationSeverity.Info, "Connectivity OK", string.IsNullOrWhiteSpace(result) ? "Provider responded." : result, 3000);
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Warning, "Saved, but test failed", ex.Message, 5000);
+            }
+
+            await SettingsChanged.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            NotificationService.Notify(NotificationSeverity.Error, "Save failed", ex.Message, 5000);
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    async Task OpenUrl(string url)
+    {
+        try { await JSRuntime.InvokeVoidAsync("open", url, "_blank"); }
+        catch { /* ignore */ }
+    }
+}
