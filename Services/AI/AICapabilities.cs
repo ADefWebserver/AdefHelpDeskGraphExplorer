@@ -45,4 +45,21 @@ internal static class AICapabilities
         if (id.StartsWith("claude-sonnet-4")) return false;
         return true;
     }
+
+    /// <summary>
+    /// Whether the active provider+model pair can drive a tool / function-calling loop
+    /// through Microsoft.Extensions.AI's <c>FunctionCallContent</c> round-trip.
+    /// Today only OpenAI and Azure OpenAI use the native SDK that supports this; the
+    /// custom <see cref="AnthropicChatClient"/> and <see cref="GoogleAIChatClient"/>
+    /// wrappers do not yet forward tool definitions to the wire protocol.
+    /// </summary>
+    public static bool SupportsToolCalling(string? providerKey, string? modelId)
+    {
+        if (string.IsNullOrWhiteSpace(providerKey)) return false;
+        var key = providerKey.Trim();
+        if (string.Equals(key, "OpenAI", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(key, "AzureOpenAI", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(key, "Azure OpenAI", StringComparison.OrdinalIgnoreCase)) return true;
+        return false;
+    }
 }

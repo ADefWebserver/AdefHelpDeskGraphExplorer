@@ -102,6 +102,15 @@ h1:focus {
 .chat-bubble { display: flex; gap: 0.5rem; max-width: 78%; align-items: flex-start; }
 .chat-bubble-user { align-self: flex-end; flex-direction: row-reverse; }
 .chat-bubble-assistant, .chat-bubble-error { align-self: flex-start; }
+.chat-bubble-tool { align-self: flex-start; max-width: 92%; opacity: 0.95; }
+.chat-bubble-tool .chat-bubble-body {
+    background: #fff7d6; border: 1px solid #facc15; color: #713f12;
+    border-top-left-radius: 4px; font-size: 0.8rem;
+}
+.chat-avatar-tool { background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%); }
+.chat-tool-details { margin-top: 0.25rem; }
+.chat-tool-details summary { cursor: pointer; color: #92400e; font-size: 0.72rem; }
+.chat-tool-args { margin: 0.3rem 0 0 0; background: rgba(0,0,0,0.04); padding: 0.35rem 0.5rem; border-radius: 4px; font-size: 0.72rem; max-height: 200px; overflow:auto; }
 
 .chat-avatar {
     flex: 0 0 auto;

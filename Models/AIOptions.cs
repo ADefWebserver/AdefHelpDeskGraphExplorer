@@ -7,6 +7,17 @@ public sealed class AIOptions
     public string ActiveProvider { get; set; } = "OpenAI";
     public Dictionary<string, ProviderOptions> Providers { get; set; } = new();
     public ChatDefaults Defaults { get; set; } = new();
+    public ToolsOptions Tools { get; set; } = new();
+}
+
+public sealed class ToolsOptions
+{
+    /// <summary>Master switch for graph-traversal tool calling on the chat page.</summary>
+    public bool Enabled { get; set; } = true;
+    /// <summary>Maximum tool-call rounds per user turn (safety cap).</summary>
+    public int MaxCallsPerTurn { get; set; } = 6;
+    /// <summary>Hard ceiling for any tool's max-results parameter.</summary>
+    public int MaxResultsHardCap { get; set; } = 100;
 }
 
 public sealed class ProviderOptions

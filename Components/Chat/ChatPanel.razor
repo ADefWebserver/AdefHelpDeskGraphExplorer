@@ -27,6 +27,11 @@
                         Style="width:210px;" />
         <RadzenButton Icon="refresh" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
                       Click="RefreshModels" IsBusy="@_loadingModels" title="Refresh models" />
+        @if (ToolsAvailable)
+        {
+            <RadzenBadge BadgeStyle="BadgeStyle.Success" Text="Graph tools on" IsPill="true"
+                         title="AI can browse the help-desk knowledge graph via tool calls." />
+        }
         <span style="flex:1;"></span>
         <RadzenButton Icon="restart_alt" ButtonStyle="ButtonStyle.Light" Size="ButtonSize.Small"
                       Click="ClearChat" Text="Clear" />
@@ -155,7 +160,8 @@
     async Task HandleSubmit(string prompt)
     {
         _lastError = null;
-        _messages.Add(new ChatTurn(ChatTurnRole.User, prompt));
+        var userTurn = new ChatTurn(ChatTurnRole.User, prompt);
+        _messages.Add(userTurn);
         var assistant = new ChatTurn(ChatTurnRole.Assistant, "") { IsStreaming = true };
         _messages.Add(assistant);
 
@@ -166,10 +172,11 @@
         try
         {
             await foreach (var delta in ChatService.StreamAsync(
-                _messages.Where(m => m != assistant),
+                _messages.Where(m => m != assistant && m.Role != ChatTurnRole.Tool),
                 _provider,
                 _model,
-                _cts.Token))
+                onToolCall: OnToolCallAsync,
+                ct: _cts.Token))
             {
                 assistant.Content += delta;
                 StateHasChanged();
@@ -194,6 +201,27 @@
             StateHasChanged();
         }
     }
+
+    Task OnToolCallAsync(ToolInvocation inv)
+    {
+        // Insert the tool card just *before* the streaming assistant bubble so the
+        // transcript reads: user → tool calls → assistant final answer.
+        var assistantIdx = _messages.FindLastIndex(m => m.Role == ChatTurnRole.Assistant && m.IsStreaming);
+        var toolTurn = new ChatTurn
+        {
+            Role = ChatTurnRole.Tool,
+            ToolName = inv.Name,
+            ToolArgumentsJson = inv.ArgumentsJson,
+            ToolResultSummary = inv.ResultSummary
+        };
+        if (assistantIdx >= 0) _messages.Insert(assistantIdx, toolTurn);
+        else _messages.Add(toolTurn);
+        return InvokeAsync(StateHasChanged);
+    }
+
+    bool ToolsAvailable =>
+        OptionsMonitor.CurrentValue.Tools.Enabled
+        && AdefHelpDeskGraphExplorer.Services.AI.AICapabilities.SupportsToolCalling(_provider, _model);
 
     void HandleCancel() => _cts?.Cancel();
 

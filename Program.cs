@@ -2,6 +2,7 @@ using AdefHelpDeskGraphExplorer.Components;
 using AdefHelpDeskGraphExplorer.Data;
 using AdefHelpDeskGraphExplorer.Models;
 using AdefHelpDeskGraphExplorer.Services.AI;
+using AdefHelpDeskGraphExplorer.Services.AI.GraphTools;
 using AdefHelpDeskGraphExplorer.Services.Graph;
 using AdefHelpDeskGraphExplorer.Services.HelpDesk;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@ namespace AdefHelpDeskGraphExplorer
             builder.Services.AddSingleton<GraphCache>();
             builder.Services.AddSingleton<GraphQueryService>();
             builder.Services.AddScoped<IHelpDeskGraphBuilder, HelpDeskGraphBuilder>();
+            builder.Services.AddScoped<IGraphChatTools, GraphChatTools>();
 
             var app = builder.Build();
 

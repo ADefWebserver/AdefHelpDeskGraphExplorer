@@ -45,6 +45,16 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
         var users = await _repo.GetUsersAsync(userIds, ct);
         progress?.Report(85);
 
+        // Build a resolved display-name lookup once.
+        static string DisplayName(HdUser u)
+        {
+            var full = $"{u.FirstName} {u.LastName}".Trim();
+            if (!string.IsNullOrWhiteSpace(full)) return full;
+            if (!string.IsNullOrWhiteSpace(u.Username)) return u.Username!;
+            return $"User {u.UserID}";
+        }
+        var nameById = users.ToDictionary(u => u.UserID, DisplayName);
+
         var doc = new GraphDocument
         {
             GeneratedUtc = DateTime.UtcNow
@@ -60,15 +70,14 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
             {
                 Id = id,
                 Type = "User",
-                Label = string.IsNullOrWhiteSpace($"{u.FirstName} {u.LastName}".Trim())
-                    ? (u.Username ?? $"User {u.UserID}")
-                    : $"{u.FirstName} {u.LastName}".Trim(),
+                Label = DisplayName(u),
                 Data = new()
                 {
                     ["userId"] = u.UserID,
                     ["username"] = u.Username,
                     ["email"] = u.Email,
-                    ["isSuperUser"] = u.IsSuperUser
+                    ["isSuperUser"] = u.IsSuperUser,
+                    ["displayName"] = DisplayName(u)
                 }
             });
         }
@@ -97,6 +106,21 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
         {
             var id = $"task:{t.TaskID}";
             if (!nodeIds.Add(id)) continue;
+
+            // Resolved requester display name: prefer the joined Users row, then
+            // fall back to the denormalised RequesterName column on the task.
+            string? requesterName = null;
+            if (t.RequesterUserID.HasValue && nameById.TryGetValue(t.RequesterUserID.Value, out var rn))
+                requesterName = rn;
+            if (string.IsNullOrWhiteSpace(requesterName))
+                requesterName = string.IsNullOrWhiteSpace(t.RequesterName) ? null : t.RequesterName;
+
+            // The legacy HdTask entity has no AssignedUserID column today, so
+            // "assigned" semantics collapse onto "requester". When the schema
+            // grows a real assignee field, populate the assigned* keys from it.
+            var assignedUserId = t.RequesterUserID;
+            var assignedUserName = requesterName;
+
             doc.Nodes.Add(new GraphNode
             {
                 Id = id,
@@ -110,7 +134,9 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
                     ["createdUtc"] = t.CreatedDate,
                     ["dueUtc"] = t.DueDate,
                     ["requesterUserId"] = t.RequesterUserID,
-                    ["requesterName"] = t.RequesterName,
+                    ["requesterName"] = requesterName,
+                    ["assignedUserId"] = assignedUserId,
+                    ["assignedUserName"] = assignedUserName,
                     ["assignedRoleId"] = t.AssignedRoleID,
                     ["description"] = t.Description
                 }
@@ -124,6 +150,11 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
             var prefix = isComment ? "comment" : "detail";
             var id = $"{prefix}:{d.DetailID}";
             if (!nodeIds.Add(id)) continue;
+
+            string? authorUserName = null;
+            if (d.UserID.HasValue && nameById.TryGetValue(d.UserID.Value, out var an))
+                authorUserName = an;
+
             doc.Nodes.Add(new GraphNode
             {
                 Id = id,
@@ -135,6 +166,8 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
                     ["taskId"] = d.TaskID,
                     ["detailType"] = d.DetailType,
                     ["userId"] = d.UserID,
+                    ["authorUserId"] = d.UserID,
+                    ["authorUserName"] = authorUserName,
                     ["insertedUtc"] = d.InsertDate,
                     ["text"] = d.Description,
                     ["startTime"] = d.StartTime,
@@ -154,7 +187,12 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
             {
                 var u = $"user:{t.RequesterUserID.Value}";
                 if (nodeIds.Contains(u))
+                {
                     doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = taskNode, Target = u, Type = "REQUESTED_BY" });
+                    // Until the schema grows a distinct AssignedUserID column,
+                    // "assigned to" mirrors "requested by".
+                    doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = taskNode, Target = u, Type = "ASSIGNED_TO" });
+                }
             }
         }
 
@@ -193,7 +231,10 @@ public class HelpDeskGraphBuilder : IHelpDeskGraphBuilder
             {
                 var u = $"user:{d.UserID.Value}";
                 if (nodeIds.Contains(u) && nodeIds.Contains(dst))
+                {
                     doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = u, Target = dst, Type = "AUTHORED" });
+                    doc.Edges.Add(new GraphEdge { Id = NextEdgeId(), Source = dst, Target = u, Type = "AUTHORED_BY" });
+                }
             }
         }
 

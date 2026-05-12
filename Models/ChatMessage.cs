@@ -4,7 +4,8 @@ public enum ChatTurnRole
 {
     System,
     User,
-    Assistant
+    Assistant,
+    Tool
 }
 
 /// <summary>
@@ -18,6 +19,11 @@ public sealed class ChatTurn
     public DateTimeOffset Timestamp { get; set; } = DateTimeOffset.Now;
     public bool IsStreaming { get; set; }
     public bool IsError { get; set; }
+
+    // Tool-message extras (only populated when Role == Tool).
+    public string? ToolName { get; set; }
+    public string? ToolArgumentsJson { get; set; }
+    public string? ToolResultSummary { get; set; }
 
     public ChatTurn() { }
 

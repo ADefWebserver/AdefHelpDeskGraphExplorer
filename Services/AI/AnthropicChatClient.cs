@@ -45,14 +45,15 @@ public class AnthropicChatClient : IChatClient, IDisposable
         ChatOptions? options = null,
         CancellationToken cancellationToken = default)
     {
-        var systemText = "";
+        var systemParts = new List<string>();
         var messages = new List<object>();
 
         foreach (var msg in chatMessages)
         {
             if (msg.Role == ChatRole.System)
             {
-                systemText = msg.Text ?? "";
+                var t = msg.Text;
+                if (!string.IsNullOrEmpty(t)) systemParts.Add(t);
             }
             else if (msg.Role == ChatRole.User)
             {
@@ -63,6 +64,8 @@ public class AnthropicChatClient : IChatClient, IDisposable
                 messages.Add(new { role = "assistant", content = msg.Text ?? "" });
             }
         }
+
+        var systemText = string.Join("\n\n", systemParts);
 
         if (messages.Count == 0 && !string.IsNullOrEmpty(systemText))
         {

@@ -1,33 +1,52 @@
-@using AdefHelpDeskGraphExplorer.Models
 @using Markdig
-
-<div class="chat-bubble @(Message.Role == ChatTurnRole.User ? "chat-bubble-user" : Message.IsError ? "chat-bubble-error" : "chat-bubble-assistant")">
-    <div class="chat-avatar @(Message.Role == ChatTurnRole.User ? "chat-avatar-user" : Message.IsError ? "chat-avatar-error" : "chat-avatar-assistant")">
-        <RadzenIcon Icon="@(Message.Role == ChatTurnRole.User ? "person" : Message.IsError ? "error" : "smart_toy")" />
-    </div>
-    <div class="chat-bubble-body">
-        <div class="chat-bubble-role">
-            @(Message.Role == ChatTurnRole.User ? "You" : Message.Role == ChatTurnRole.Assistant ? "Assistant" : "System")
-            @if (Message.IsStreaming)
-            {
-                <span class="chat-bubble-streaming">▌</span>
-            }
+@if (Message.Role == ChatTurnRole.Tool)
+{
+    <div class="chat-bubble chat-bubble-tool">
+        <div class="chat-avatar chat-avatar-tool">
+            <RadzenIcon Icon="build" />
         </div>
-        <div class="chat-bubble-content">
-            @((MarkupString)RenderedHtml)
+        <div class="chat-bubble-body">
+            <div class="chat-bubble-role">
+                Tool · <code>@Message.ToolName</code>
+                <span style="color:#64748b; margin-left:0.5rem;">@Message.ToolResultSummary</span>
+            </div>
+            <details class="chat-tool-details">
+                <summary>arguments</summary>
+                <pre class="chat-tool-args"><code>@(Message.ToolArgumentsJson ?? "{}")</code></pre>
+            </details>
         </div>
     </div>
-</div>
+}
+else
+{
+    <div class="chat-bubble @(Message.Role == ChatTurnRole.User ? "chat-bubble-user" : Message.IsError ? "chat-bubble-error" : "chat-bubble-assistant")">
+        <div class="chat-avatar @(Message.Role == ChatTurnRole.User ? "chat-avatar-user" : Message.IsError ? "chat-avatar-error" : "chat-avatar-assistant")">
+            <RadzenIcon Icon="@(Message.Role == ChatTurnRole.User ? "person" : Message.IsError ? "error" : "smart_toy")" />
+        </div>
+        <div class="chat-bubble-body">
+            <div class="chat-bubble-role">
+                @(Message.Role == ChatTurnRole.User ? "You" : Message.Role == ChatTurnRole.Assistant ? "Assistant" : "System")
+                @if (Message.IsStreaming)
+                {
+                    <span class="chat-bubble-streaming">▌</span>
+                }
+            </div>
+            <div class="chat-bubble-content">
+                @((MarkupString)RenderedHtml)
+            </div>
+        </div>
+    </div>
+}
 
 @code {
-    [Parameter, EditorRequired] public ChatTurn Message { get; set; } = default!;
+    [Parameter, EditorRequired] public AdefHelpDeskGraphExplorer.Models.ChatTurn Message { get; set; } = default!;
 
-    private static readonly MarkdownPipeline Pipeline = new MarkdownPipelineBuilder()
+    private static readonly Markdig.MarkdownPipeline Pipeline = new Markdig.MarkdownPipelineBuilder()
         .UseAdvancedExtensions()
         .DisableHtml()
         .Build();
 
-    string RenderedHtml => Message.Role == ChatTurnRole.User
+    string RenderedHtml => Message.Role == AdefHelpDeskGraphExplorer.Models.ChatTurnRole.User
         ? System.Net.WebUtility.HtmlEncode(Message.Content).Replace("\n", "<br/>")
-        : Markdown.ToHtml(Message.Content ?? string.Empty, Pipeline);
+        : Markdig.Markdown.ToHtml(Message.Content ?? string.Empty, Pipeline);
 }

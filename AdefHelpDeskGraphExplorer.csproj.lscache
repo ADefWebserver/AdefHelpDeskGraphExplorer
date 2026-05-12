@@ -83,6 +83,11 @@ Services/AI/
  ChatClientFactory.cs
  ChatService.cs
  GoogleAIChatClient.cs
+ GraphTools/
+  GraphChatTools.cs
+  GraphToolDtos.cs
+  GraphToolRegistration.cs
+  IGraphChatTools.cs
 Services/Graph/
  GraphCache.cs
  GraphQueryService.cs
