@@ -652,10 +652,10 @@ sequenceDiagram
 
 ```mermaid
 flowchart TB
-    subgraph DI[Dependency Injection (Program.cs)]
+    subgraph DI["Dependency Injection (Program.cs)"]
         ChatClientFactory
         ChatService
-        IGraphChatTools_GraphChatTools[IGraphChatTools -> GraphChatTools]
+        IGraphChatTools_GraphChatTools["IGraphChatTools -&gt; GraphChatTools"]
         GraphQueryService
         GraphCache
     end
