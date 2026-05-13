@@ -19,6 +19,91 @@ window.graphView = (function () {
         }
     }
 
+    // Per-node-type accent colors used in the tooltip header. Keep in sync
+    // with the `groups` option passed to vis.Network below.
+    const TYPE_COLORS = {
+        Task:       '#4e79a7',
+        TaskDetail: '#f28e2b',
+        Comment:    '#e15759',
+        User:       '#76b7b2',
+        Requester:  '#b07aa1',
+        Category:   '#59a14f'
+    };
+
+    function escapeHtml(s) {
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    function humanizeKey(k) {
+        // detailType -> Detail Type, insertedUtc -> Inserted Utc
+        const spaced = String(k).replace(/([a-z0-9])([A-Z])/g, '$1 $2');
+        return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+    }
+
+    function formatValue(key, val) {
+        if (val === null || val === undefined || val === '') return null;
+        // ISO date detection
+        if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(val)) {
+            const d = new Date(val);
+            if (!isNaN(d.getTime())) {
+                return d.toLocaleString();
+            }
+        }
+        if (typeof val === 'object') {
+            try { return JSON.stringify(val); } catch { return String(val); }
+        }
+        return String(val);
+    }
+
+    function buildTooltip(node) {
+        const el = document.createElement('div');
+        el.className = 'graph-tooltip';
+        const accent = TYPE_COLORS[node.type] || '#555';
+        el.style.setProperty('--accent', accent);
+
+        const header = document.createElement('div');
+        header.className = 'graph-tooltip-header';
+        header.innerHTML =
+            '<span class="graph-tooltip-type">' + escapeHtml(node.type || 'Node') + '</span>' +
+            '<span class="graph-tooltip-label">' + escapeHtml(node.label || '') + '</span>';
+        el.appendChild(header);
+
+        const data = node.data || {};
+        const rows = [];
+        for (const k of Object.keys(data)) {
+            const formatted = formatValue(k, data[k]);
+            if (formatted === null) continue;
+            rows.push({ key: k, value: formatted });
+        }
+
+        if (rows.length === 0) {
+            const empty = document.createElement('div');
+            empty.className = 'graph-tooltip-empty';
+            empty.textContent = 'No additional properties';
+            el.appendChild(empty);
+            return el;
+        }
+
+        const table = document.createElement('table');
+        table.className = 'graph-tooltip-table';
+        for (const r of rows) {
+            const tr = document.createElement('tr');
+            const isLong = r.value.length > 80;
+            tr.innerHTML =
+                '<th>' + escapeHtml(humanizeKey(r.key)) + '</th>' +
+                '<td' + (isLong ? ' class="graph-tooltip-long"' : '') + '>' +
+                escapeHtml(r.value) + '</td>';
+            table.appendChild(tr);
+        }
+        el.appendChild(table);
+        return el;
+    }
+
     async function render() {
         renderCompleteSent = false;
         const container = document.getElementById(containerId);
@@ -49,7 +134,7 @@ window.graphView = (function () {
             id: n.id,
             label: n.label,
             group: n.type,
-            title: JSON.stringify(n.data, null, 2),
+            title: buildTooltip(n),
             hidden: false
         })));
         const edges = new vis.DataSet(g.edges.map(e => ({
@@ -72,16 +157,21 @@ window.graphView = (function () {
                 // forceAtlas2Based handles hub-and-spoke layouts (e.g., a single
                 // requester linked to many tasks) much more cleanly than the
                 // default Barnes-Hut solver, which tends to squash hubs together.
+                // centralGravity is high enough that nodes settle quickly after
+                // a drag instead of drifting forever, while damping keeps the
+                // motion gentle.
                 physics: {
-                    stabilization: { iterations: 200 },
+                    stabilization: { enabled: true, iterations: 200, fit: true },
                     solver: 'forceAtlas2Based',
                     forceAtlas2Based: {
                         gravitationalConstant: -80,
-                        centralGravity: 0.005,
+                        centralGravity: 0.02,
                         springLength: 150,
-                        springConstant: 0.06,
-                        avoidOverlap: 0.6
-                    }
+                        springConstant: 0.08,
+                        avoidOverlap: 0.6,
+                        damping: 0.9
+                    },
+                    minVelocity: 0.75
                 },
                 interaction: { hover: true },
                 groups: {
@@ -101,11 +191,15 @@ window.graphView = (function () {
             }
         });
 
-        // Notify Blazor once physics stabilization finishes.
+        // Notify Blazor once physics stabilization finishes. We keep physics
+        // enabled so nodes settle gently after a drag, but the higher
+        // centralGravity + damping + minVelocity above ensure motion actually
+        // stops instead of drifting forever.
         network.once('stabilizationIterationsDone', () => notifyRenderComplete());
 
-        // Safety fallback in case stabilization event never fires (small graphs).
-        setTimeout(notifyRenderComplete, 5000);
+        // Safety fallback in case stabilization event never fires (small
+        // graphs or pathological layouts).
+        setTimeout(notifyRenderComplete, 8000);
     }
 
     // Synthesized "Requester" nodes are now produced server-side in
