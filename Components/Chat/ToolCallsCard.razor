@@ -1,0 +1,47 @@
+@using AdefHelpDeskGraphExplorer.Models
+@inject DialogService DialogService
+
+<div class="chat-bubble chat-bubble-tool chat-tool-summary">
+    <div class="chat-avatar chat-avatar-tool">
+        <RadzenIcon Icon="build" />
+    </div>
+    <div class="chat-bubble-body">
+        <div class="chat-bubble-role">
+            @Calls.Count tool call@(Calls.Count == 1 ? "" : "s")
+            <span style="color:#64748b; margin-left:0.5rem;">@SummaryText</span>
+        </div>
+        <RadzenButton Text="View details"
+                      Icon="visibility"
+                      ButtonStyle="ButtonStyle.Light"
+                      Size="ButtonSize.ExtraSmall"
+                      Click="ShowDetailsAsync" />
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<ChatTurn> Calls { get; set; } = Array.Empty<ChatTurn>();
+
+    string SummaryText
+    {
+        get
+        {
+            var groups = Calls
+                .GroupBy(c => c.ToolName ?? "(unknown)")
+                .Select(g => g.Count() == 1 ? g.Key : $"{g.Key} ×{g.Count()}")
+                .Take(3)
+                .ToList();
+            var text = string.Join(", ", groups);
+            var distinct = Calls.Select(c => c.ToolName ?? "(unknown)").Distinct().Count();
+            if (distinct > 3) text += ", …";
+            return text;
+        }
+    }
+
+    async Task ShowDetailsAsync()
+    {
+        await DialogService.OpenAsync<ToolCallsDialog>(
+            $"Tool calls ({Calls.Count})",
+            new Dictionary<string, object> { { "Calls", Calls } },
+            new DialogOptions { Width = "720px", Height = "auto", Resizable = true, Draggable = true });
+    }
+}

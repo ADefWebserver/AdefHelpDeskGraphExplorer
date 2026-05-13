@@ -1,0 +1,26 @@
+@using AdefHelpDeskGraphExplorer.Models
+
+<div class="chat-tool-dialog">
+    @for (var i = 0; i < Calls.Count; i++)
+    {
+        var call = Calls[i];
+        <div class="chat-tool-dialog-item">
+            <div class="chat-tool-dialog-header">
+                <span class="chat-tool-dialog-index">#@(i + 1)</span>
+                <code>@call.ToolName</code>
+                @if (!string.IsNullOrWhiteSpace(call.ToolResultSummary))
+                {
+                    <span class="chat-tool-dialog-summary">@call.ToolResultSummary</span>
+                }
+            </div>
+            <details open="@(Calls.Count <= 3)">
+                <summary>arguments</summary>
+                <pre class="chat-tool-args"><code>@(call.ToolArgumentsJson ?? "{}")</code></pre>
+            </details>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter, EditorRequired] public IReadOnlyList<ChatTurn> Calls { get; set; } = Array.Empty<ChatTurn>();
+}

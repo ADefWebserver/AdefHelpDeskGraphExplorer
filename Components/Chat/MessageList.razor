@@ -1,9 +1,23 @@
 @using AdefHelpDeskGraphExplorer.Models
 
 <div class="chat-message-list" @ref="_container">
-    @foreach (var msg in Messages.Where(m => m.Role != ChatTurnRole.System))
-    {
-        <MessageBubble Message="msg" />
+    @{
+        var visible = Messages.Where(m => m.Role != ChatTurnRole.System).ToList();
+        for (var i = 0; i < visible.Count; i++)
+        {
+            if (visible[i].Role == ChatTurnRole.Tool)
+            {
+                var start = i;
+                while (i < visible.Count && visible[i].Role == ChatTurnRole.Tool) i++;
+                var group = visible.GetRange(start, i - start);
+                i--;
+                <ToolCallsCard Calls="group" />
+            }
+            else
+            {
+                <MessageBubble Message="visible[i]" />
+            }
+        }
     }
 </div>
 

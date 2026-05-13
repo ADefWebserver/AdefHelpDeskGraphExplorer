@@ -478,6 +478,8 @@ Components/
   MessageBubble.razor
   MessageInput.razor
   MessageList.razor
+  ToolCallsCard.razor
+  ToolCallsDialog.razor
  Graph/NodePropertiesPanel.razor
  Layout/
   MainLayout.razor
@@ -500,6 +502,8 @@ Components/
   MessageBubble.razor
   MessageInput.razor
   MessageList.razor
+  ToolCallsCard.razor
+  ToolCallsDialog.razor
  Graph/NodePropertiesPanel.razor
  Layout/
   MainLayout.razor
