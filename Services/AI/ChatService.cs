@@ -230,6 +230,7 @@ public sealed class ChatService
             ct.ThrowIfCancellationRequested();
 
             ChatResponse? response = null;
+            Exception? roundError = null;
             try
             {
                 response = await client.GetResponseAsync(messages, chatOptions, ct);
@@ -238,6 +239,17 @@ public sealed class ChatService
             {
                 _logger.LogWarning(ex, "Tool-enabled chat round failed; retrying once without tools.");
                 retryWithoutTools = true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Tool-enabled chat round {Round} failed.", round);
+                roundError = ex;
+            }
+
+            if (roundError is not null)
+            {
+                yield return $"\n\n[Provider error: {roundError.Message}]";
+                yield break;
             }
 
             if (retryWithoutTools)

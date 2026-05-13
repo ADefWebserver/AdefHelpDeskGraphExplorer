@@ -62,6 +62,7 @@ internal static class AICapabilities
         if (string.Equals(key, "AzureOpenAI", StringComparison.OrdinalIgnoreCase)) return true;
         if (string.Equals(key, "Azure OpenAI", StringComparison.OrdinalIgnoreCase)) return true;
         if (IsAnthropic(key)) return true;
+        if (IsGemini(key)) return true;
         return false;
     }
 }
